@@ -65,6 +65,17 @@ dependencies {
     implementation 'com.google.dagger:dagger-android-support:2.21'
     kapt 'com.google.dagger:dagger-compiler:2.21'
 
+    //okhttp
+    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+
+    //moshi
+    implementation 'com.squareup.moshi:moshi-kotlin:1.8.0'
+
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.4.0'
+
+
 
 
 
