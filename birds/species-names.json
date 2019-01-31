@@ -1,0 +1,1986 @@
+[
+  {
+    "speciesAbbr": "CYGOLO",
+    "speciesSCI": "Cygnus olor",
+    "speciesFI": "Kyhmyjoutsen",
+    "speciesSV": "Knölsvan",
+    "speciesEN": "Mute Swan",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CYGCYG",
+    "speciesSCI": "Cygnus cygnus",
+    "speciesFI": "Laulujoutsen",
+    "speciesSV": "Sångsvan",
+    "speciesEN": "Whooper Swan",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ANSFAB",
+    "speciesSCI": "Anser fabalis",
+    "speciesFI": "Metsähanhi",
+    "speciesSV": "Sädgås",
+    "speciesEN": "Bean Goose",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ANSERY",
+    "speciesSCI": "Anser erythropus",
+    "speciesFI": "Kiljuhanhi",
+    "speciesSV": "Fjällgås",
+    "speciesEN": "Lesser White-fronted Goose",
+    "visibility": 0
+  },
+  {
+    "speciesAbbr": "ANSANS",
+    "speciesSCI": "Anser anser",
+    "speciesFI": "Merihanhi",
+    "speciesSV": "Grågås",
+    "speciesEN": "Greylag Goose",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ANSCAE",
+    "speciesSCI": "Anser caerulescens",
+    "speciesFI": "Lumihanhi",
+    "speciesSV": "Snögås",
+    "speciesEN": "Snow Goose",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "BRACAN",
+    "speciesSCI": "Branta canadensis",
+    "speciesFI": "Kanadanhanhi",
+    "speciesSV": "Kanadagås",
+    "speciesEN": "Canada Goose",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "BRALEU",
+    "speciesSCI": "Branta leucopsis",
+    "speciesFI": "Valkoposkihanhi",
+    "speciesSV": "Vitkindad gås",
+    "speciesEN": "Barnacle Goose",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "TADTAD",
+    "speciesSCI": "Tadorna tadorna",
+    "speciesFI": "Ristisorsa",
+    "speciesSV": "Gravand",
+    "speciesEN": "Shelduck",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ANAPEN",
+    "speciesSCI": "Anas penelope",
+    "speciesFI": "Haapana",
+    "speciesSV": "Bläsand",
+    "speciesEN": "Wigeon",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ANASTR",
+    "speciesSCI": "Anas strepera",
+    "speciesFI": "Harmaasorsa",
+    "speciesSV": "Snatterand",
+    "speciesEN": "Gadwall",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ANACRE",
+    "speciesSCI": "Anas crecca",
+    "speciesFI": "Tavi",
+    "speciesSV": "Kricka",
+    "speciesEN": "Teal",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ANAPLA",
+    "speciesSCI": "Anas platyrhynchos",
+    "speciesFI": "Sinisorsa",
+    "speciesSV": "Gräsand",
+    "speciesEN": "Mallard",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ANAACU",
+    "speciesSCI": "Anas acuta",
+    "speciesFI": "Jouhisorsa",
+    "speciesSV": "Stjärtand",
+    "speciesEN": "Pintail",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ANAQUE",
+    "speciesSCI": "Anas querquedula",
+    "speciesFI": "Heinätavi",
+    "speciesSV": "Årta",
+    "speciesEN": "Garganey",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ANACLY",
+    "speciesSCI": "Anas clypeata",
+    "speciesFI": "Lapasorsa",
+    "speciesSV": "Skedand",
+    "speciesEN": "Shoveler",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "AYTFER",
+    "speciesSCI": "Aythya ferina",
+    "speciesFI": "Punasotka",
+    "speciesSV": "Brunand",
+    "speciesEN": "Pochard",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "AYTFUL",
+    "speciesSCI": "Aythya fuligula",
+    "speciesFI": "Tukkasotka",
+    "speciesSV": "Vigg",
+    "speciesEN": "Tufted Duck",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "AYTMAR",
+    "speciesSCI": "Aythya marila",
+    "speciesFI": "Lapasotka",
+    "speciesSV": "Bergand",
+    "speciesEN": "Scaup",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "SOMMOL",
+    "speciesSCI": "Somateria mollissima",
+    "speciesFI": "Haahka",
+    "speciesSV": "Ejder",
+    "speciesEN": "Eider",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CLAHYE",
+    "speciesSCI": "Clangula hyemalis",
+    "speciesFI": "Alli",
+    "speciesSV": "Alfågel",
+    "speciesEN": "Long-tailed Duck",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "MELNIG",
+    "speciesSCI": "Melanitta nigra",
+    "speciesFI": "Mustalintu",
+    "speciesSV": "Sjöorre",
+    "speciesEN": "Common Scoter",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "MELFUS",
+    "speciesSCI": "Melanitta fusca",
+    "speciesFI": "Pilkkasiipi",
+    "speciesSV": "Svärta",
+    "speciesEN": "Velvet Scoter",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "BUCCLA",
+    "speciesSCI": "Bucephala clangula",
+    "speciesFI": "Telkkä",
+    "speciesSV": "Knipa",
+    "speciesEN": "Goldeneye",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "MERALB",
+    "speciesSCI": "Mergellus albellus",
+    "speciesFI": "Uivelo",
+    "speciesSV": "Salskrake",
+    "speciesEN": "Smew",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "MERSER",
+    "speciesSCI": "Mergus serrator",
+    "speciesFI": "Tukkakoskelo",
+    "speciesSV": "Småskrake",
+    "speciesEN": "Red-breasted Merganser",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "MERMER",
+    "speciesSCI": "Mergus merganser",
+    "speciesFI": "Isokoskelo",
+    "speciesSV": "Storskrake",
+    "speciesEN": "Goosander",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "BONBON",
+    "speciesSCI": "Tetrastes bonasia",
+    "speciesFI": "Pyy",
+    "speciesSV": "Järpe",
+    "speciesEN": "Hazel Grouse",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LAGLAG",
+    "speciesSCI": "Lagopus lagopus",
+    "speciesFI": "Riekko",
+    "speciesSV": "Dalripa",
+    "speciesEN": "Willow Grouse",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LAGMUT",
+    "speciesSCI": "Lagopus muta",
+    "speciesFI": "Kiiruna",
+    "speciesSV": "Fjällripa",
+    "speciesEN": "Ptarmigan",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "TETRIX",
+    "speciesSCI": "Lyrurus tetrix",
+    "speciesFI": "Teeri",
+    "speciesSV": "Orre",
+    "speciesEN": "Black Grouse",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "TETURO",
+    "speciesSCI": "Tetrao urogallus",
+    "speciesFI": "Metso",
+    "speciesSV": "Tjäder",
+    "speciesEN": "Capercaillie",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PERPER",
+    "speciesSCI": "Perdix perdix",
+    "speciesFI": "Peltopyy",
+    "speciesSV": "Rapphöna",
+    "speciesEN": "Partridge",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "COTCOT",
+    "speciesSCI": "Coturnix coturnix",
+    "speciesFI": "Viiriäinen",
+    "speciesSV": "Vaktel",
+    "speciesEN": "Quail",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PHACOL",
+    "speciesSCI": "Phasianus colchicus",
+    "speciesFI": "Fasaani",
+    "speciesSV": "Fasan",
+    "speciesEN": "Pheasant",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "GAVSTE",
+    "speciesSCI": "Gavia stellata",
+    "speciesFI": "Kaakkuri",
+    "speciesSV": "Smålom",
+    "speciesEN": "Red-throated Diver",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "GAVARC",
+    "speciesSCI": "Gavia arctica",
+    "speciesFI": "Kuikka",
+    "speciesSV": "Storlom",
+    "speciesEN": "Black-throated Diver",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "TACRUF",
+    "speciesSCI": "Tachybaptus ruficollis",
+    "speciesFI": "Pikku-uikku",
+    "speciesSV": "Smådopping",
+    "speciesEN": "Little Grebe",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PODCRI",
+    "speciesSCI": "Podiceps cristatus",
+    "speciesFI": "Silkkiuikku",
+    "speciesSV": "Skäggdopping",
+    "speciesEN": "Great Crested Grebe",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PODGRI",
+    "speciesSCI": "Podiceps grisegena",
+    "speciesFI": "Härkälintu",
+    "speciesSV": "Gråhakedopping",
+    "speciesEN": "Red-necked Grebe",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PODAUR",
+    "speciesSCI": "Podiceps auritus",
+    "speciesFI": "Mustakurkku-uikku",
+    "speciesSV": "Svarthakedopping",
+    "speciesEN": "Slavonian Grebe",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "BOTSTE",
+    "speciesSCI": "Botaurus stellaris",
+    "speciesFI": "Kaulushaikara",
+    "speciesSV": "Rördrom",
+    "speciesEN": "Bittern",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ARDCIN",
+    "speciesSCI": "Ardea cinerea",
+    "speciesFI": "Harmaahaikara",
+    "speciesSV": "Häger",
+    "speciesEN": "Grey Heron",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PERAPI",
+    "speciesSCI": "Pernis apivorus",
+    "speciesFI": "Mehiläishaukka",
+    "speciesSV": "Bivråk",
+    "speciesEN": "Honey Buzzard",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "MILMIG",
+    "speciesSCI": "Milvus migrans",
+    "speciesFI": "Haarahaukka",
+    "speciesSV": "Brunglada",
+    "speciesEN": "Black Kite",
+    "visibility": 0
+  },
+  {
+    "speciesAbbr": "HALALB",
+    "speciesSCI": "Haliaeetus albicilla",
+    "speciesFI": "Merikotka",
+    "speciesSV": "Havsörn",
+    "speciesEN": "White-tailed Eagle",
+    "visibility": 0
+  },
+  {
+    "speciesAbbr": "CIRAER",
+    "speciesSCI": "Circus aeruginosus",
+    "speciesFI": "Ruskosuohaukka",
+    "speciesSV": "Brun kärrhök",
+    "speciesEN": "Marsh Harrier",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CIRCYA",
+    "speciesSCI": "Circus cyaneus",
+    "speciesFI": "Sinisuohaukka",
+    "speciesSV": "Blå kärrhök",
+    "speciesEN": "Hen Harrier",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CIRPYG",
+    "speciesSCI": "Circus pygargus",
+    "speciesFI": "Niittysuohaukka",
+    "speciesSV": "Ängshök",
+    "speciesEN": "Montagu's Harrier",
+    "visibility": 0
+  },
+  {
+    "speciesAbbr": "ACCGEN",
+    "speciesSCI": "Accipiter gentilis",
+    "speciesFI": "Kanahaukka",
+    "speciesSV": "Duvhök",
+    "speciesEN": "Goshawk",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ACCNIS",
+    "speciesSCI": "Accipiter nisus",
+    "speciesFI": "Varpushaukka",
+    "speciesSV": "Sparvhök",
+    "speciesEN": "Sparrowhawk",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "BUTBUT",
+    "speciesSCI": "Buteo buteo",
+    "speciesFI": "Hiirihaukka",
+    "speciesSV": "Ormvråk",
+    "speciesEN": "Buzzard",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "BUTLAG",
+    "speciesSCI": "Buteo lagopus",
+    "speciesFI": "Piekana",
+    "speciesSV": "Fjällvråk",
+    "speciesEN": "Rough-legged Buzzard",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "AQUCLA",
+    "speciesSCI": "Aquila clanga",
+    "speciesFI": "Kiljukotka",
+    "speciesSV": "Större skrikörn",
+    "speciesEN": "Spotted Eagle",
+    "visibility": 0
+  },
+  {
+    "speciesAbbr": "AQUCHR",
+    "speciesSCI": "Aquila chrysaetos",
+    "speciesFI": "Maakotka",
+    "speciesSV": "Kungsörn",
+    "speciesEN": "Golden Eagle",
+    "visibility": 0
+  },
+  {
+    "speciesAbbr": "PANHAL",
+    "speciesSCI": "Pandion haliaetus",
+    "speciesFI": "Sääksi",
+    "speciesSV": "Fiskgjuse",
+    "speciesEN": "Osprey",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "FALTIN",
+    "speciesSCI": "Falco tinnunculus",
+    "speciesFI": "Tuulihaukka",
+    "speciesSV": "Tornfalk",
+    "speciesEN": "Kestrel",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "FALCOL",
+    "speciesSCI": "Falco columbarius",
+    "speciesFI": "Ampuhaukka",
+    "speciesSV": "Stenfalk",
+    "speciesEN": "Merlin",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "FALSUB",
+    "speciesSCI": "Falco subbuteo",
+    "speciesFI": "Nuolihaukka",
+    "speciesSV": "Lärkfalk",
+    "speciesEN": "Hobby",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "FALRUS",
+    "speciesSCI": "Falco rusticolus",
+    "speciesFI": "Tunturihaukka",
+    "speciesSV": "Jaktfalk",
+    "speciesEN": "Gyrfalcon",
+    "visibility": 0
+  },
+  {
+    "speciesAbbr": "FALPER",
+    "speciesSCI": "Falco peregrinus",
+    "speciesFI": "Muuttohaukka",
+    "speciesSV": "Pilgrimsfalk",
+    "speciesEN": "Peregrine",
+    "visibility": 0
+  },
+  {
+    "speciesAbbr": "RALAQU",
+    "speciesSCI": "Rallus aquaticus",
+    "speciesFI": "Luhtakana",
+    "speciesSV": "Vattenrall",
+    "speciesEN": "Water Rail",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PORPOR",
+    "speciesSCI": "Porzana porzana",
+    "speciesFI": "Luhtahuitti",
+    "speciesSV": "Småfläckig sumphöna",
+    "speciesEN": "Spotted Crake",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PORPAR",
+    "speciesSCI": "Porzana parva",
+    "speciesFI": "Pikkuhuitti",
+    "speciesSV": "Mindre sumphöna",
+    "speciesEN": "Little Crake",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CRECRE",
+    "speciesSCI": "Crex crex",
+    "speciesFI": "Ruisrääkkä",
+    "speciesSV": "Kornknarr",
+    "speciesEN": "Corncrake",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "GALCHL",
+    "speciesSCI": "Gallinula chloropus",
+    "speciesFI": "Liejukana",
+    "speciesSV": "Rörhöna",
+    "speciesEN": "Moorhen",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "FULATR",
+    "speciesSCI": "Fulica atra",
+    "speciesFI": "Nokikana",
+    "speciesSV": "Sothöna",
+    "speciesEN": "Coot",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "GRUGRU",
+    "speciesSCI": "Grus grus",
+    "speciesFI": "Kurki",
+    "speciesSV": "Trana",
+    "speciesEN": "Crane",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "HAEOST",
+    "speciesSCI": "Haematopus ostralegus",
+    "speciesFI": "Meriharakka",
+    "speciesSV": "Strandskata",
+    "speciesEN": "Oystercatcher",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CHADUB",
+    "speciesSCI": "Charadrius dubius",
+    "speciesFI": "Pikkutylli",
+    "speciesSV": "Mindre strandpipare",
+    "speciesEN": "Little Ringed Plover",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CHAHIA",
+    "speciesSCI": "Charadrius hiaticula",
+    "speciesFI": "Tylli",
+    "speciesSV": "Större strandpipare",
+    "speciesEN": "Ringed Plover",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CHAMOR",
+    "speciesSCI": "Charadrius morinellus",
+    "speciesFI": "Keräkurmitsa",
+    "speciesSV": "Fjällpipare",
+    "speciesEN": "Dotterel",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PLUAPR",
+    "speciesSCI": "Pluvialis apricaria",
+    "speciesFI": "Kapustarinta",
+    "speciesSV": "Ljungpipare",
+    "speciesEN": "Golden Plover",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "VANVAN",
+    "speciesSCI": "Vanellus vanellus",
+    "speciesFI": "Töyhtöhyyppä",
+    "speciesSV": "Tofsvipa",
+    "speciesEN": "Lapwing",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CALUTA",
+    "speciesSCI": "Calidris minuta",
+    "speciesFI": "Pikkusirri",
+    "speciesSV": "Småsnäppa",
+    "speciesEN": "Little Stint",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CALTEM",
+    "speciesSCI": "Calidris temminckii",
+    "speciesFI": "Lapinsirri",
+    "speciesSV": "Mosnäppa",
+    "speciesEN": "Temminck's Stint",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CALMAR",
+    "speciesSCI": "Calidris maritima",
+    "speciesFI": "Merisirri",
+    "speciesSV": "Skärsnäppa",
+    "speciesEN": "Purple Sandpiper",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CALALP",
+    "speciesSCI": "Calidris alpina",
+    "speciesFI": "Suosirri",
+    "speciesSV": "Kärrsnäppa",
+    "speciesEN": "Dunlin",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LIMFAL",
+    "speciesSCI": "Limicola falcinellus",
+    "speciesFI": "Jänkäsirriäinen",
+    "speciesSV": "Myrsnäppa",
+    "speciesEN": "Broad-billed Sandpiper",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PHIPUG",
+    "speciesSCI": "Philomachus pugnax",
+    "speciesFI": "Suokukko",
+    "speciesSV": "Brushane",
+    "speciesEN": "Ruff",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LYMMIN",
+    "speciesSCI": "Lymnocryptes minimus",
+    "speciesFI": "Jänkäkurppa",
+    "speciesSV": "Dvärgbeckasin",
+    "speciesEN": "Jack Snipe",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "GALGAL",
+    "speciesSCI": "Gallinago gallinago",
+    "speciesFI": "Taivaanvuohi",
+    "speciesSV": "Enkelbeckasin",
+    "speciesEN": "Snipe",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "GALMED",
+    "speciesSCI": "Gallinago media",
+    "speciesFI": "Heinäkurppa",
+    "speciesSV": "Dubbelbeckasin",
+    "speciesEN": "Great Snipe",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "SCORUS",
+    "speciesSCI": "Scolopax rusticola",
+    "speciesFI": "Lehtokurppa",
+    "speciesSV": "Morkulla",
+    "speciesEN": "Woodcock",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LIMLIM",
+    "speciesSCI": "Limosa limosa",
+    "speciesFI": "Mustapyrstökuiri",
+    "speciesSV": "Rödspov",
+    "speciesEN": "Black-tailed Godwit",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LIMLAP",
+    "speciesSCI": "Limosa lapponica",
+    "speciesFI": "Punakuiri",
+    "speciesSV": "Myrspov",
+    "speciesEN": "Bar-tailed Godwit",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "NUMPHA",
+    "speciesSCI": "Numenius phaeopus",
+    "speciesFI": "Pikkukuovi",
+    "speciesSV": "Småspov",
+    "speciesEN": "Whimbrel",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "NUMARQ",
+    "speciesSCI": "Numenius arquata",
+    "speciesFI": "Kuovi",
+    "speciesSV": "Storspov",
+    "speciesEN": "Curlew",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "TRIERY",
+    "speciesSCI": "Tringa erythropus",
+    "speciesFI": "Mustaviklo",
+    "speciesSV": "Svartsnäppa",
+    "speciesEN": "Spotted Redshank",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "TRITOT",
+    "speciesSCI": "Tringa totanus",
+    "speciesFI": "Punajalkaviklo",
+    "speciesSV": "Rödbena",
+    "speciesEN": "Redshank",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "TRISTA",
+    "speciesSCI": "Tringa stagnatilis",
+    "speciesFI": "Lampiviklo",
+    "speciesSV": "Dammsnäppa",
+    "speciesEN": "Marsh Sandpiper",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "TRINEB",
+    "speciesSCI": "Tringa nebularia",
+    "speciesFI": "Valkoviklo",
+    "speciesSV": "Gluttsnäppa",
+    "speciesEN": "Greenshank",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "TRIOCH",
+    "speciesSCI": "Tringa ochropus",
+    "speciesFI": "Metsäviklo",
+    "speciesSV": "Skogssnäppa",
+    "speciesEN": "Green Sandpiper",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "TRIGLA",
+    "speciesSCI": "Tringa glareola",
+    "speciesFI": "Liro",
+    "speciesSV": "Grönbena",
+    "speciesEN": "Wood Sandpiper",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "XENCIN",
+    "speciesSCI": "Xenus cinereus",
+    "speciesFI": "Rantakurvi",
+    "speciesSV": "Tereksnäppa",
+    "speciesEN": "Terek Sandpiper",
+    "visibility": 0
+  },
+  {
+    "speciesAbbr": "ACTHYP",
+    "speciesSCI": "Actitis hypoleucos",
+    "speciesFI": "Rantasipi",
+    "speciesSV": "Drillsnäppa",
+    "speciesEN": "Common Sandpiper",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "AREINT",
+    "speciesSCI": "Arenaria interpres",
+    "speciesFI": "Karikukko",
+    "speciesSV": "Roskarl",
+    "speciesEN": "Turnstone",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PHALOB",
+    "speciesSCI": "Phalaropus lobatus",
+    "speciesFI": "Vesipääsky",
+    "speciesSV": "Smalnäbbad simsnäppa",
+    "speciesEN": "Red-necked Phalarope",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "STECUS",
+    "speciesSCI": "Stercorarius parasiticus",
+    "speciesFI": "Merikihu",
+    "speciesSV": "Labb",
+    "speciesEN": "Arctic Skua",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "STELON",
+    "speciesSCI": "Stercorarius longicaudus",
+    "speciesFI": "Tunturikihu",
+    "speciesSV": "Fjällabb",
+    "speciesEN": "Long-tailed Skua",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LARMIN",
+    "speciesSCI": "Larus minutus",
+    "speciesFI": "Pikkulokki",
+    "speciesSV": "Dvärgmås",
+    "speciesEN": "Little Gull",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LARRID",
+    "speciesSCI": "Larus ridibundus",
+    "speciesFI": "Naurulokki",
+    "speciesSV": "Skrattmås",
+    "speciesEN": "Black-headed Gull",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LARCAN",
+    "speciesSCI": "Larus canus",
+    "speciesFI": "Kalalokki",
+    "speciesSV": "Fiskmås",
+    "speciesEN": "Common Gull",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LARFUS",
+    "speciesSCI": "Larus fuscus",
+    "speciesFI": "Selkälokki",
+    "speciesSV": "Silltrut",
+    "speciesEN": "Lesser Black-backed Gull",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LARARG",
+    "speciesSCI": "Larus argentatus",
+    "speciesFI": "Harmaalokki",
+    "speciesSV": "Gråtrut",
+    "speciesEN": "Herring Gull",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LARMAR",
+    "speciesSCI": "Larus marinus",
+    "speciesFI": "Merilokki",
+    "speciesSV": "Havstrut",
+    "speciesEN": "Great Black-backed Gull",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "STECAS",
+    "speciesSCI": "Sterna caspia",
+    "speciesFI": "Räyskä",
+    "speciesSV": "Skräntärna",
+    "speciesEN": "Caspian Tern",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "STEHIR",
+    "speciesSCI": "Sterna hirundo",
+    "speciesFI": "Kalatiira",
+    "speciesSV": "Fisktärna",
+    "speciesEN": "Common Tern",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "STEAEA",
+    "speciesSCI": "Sterna paradisaea",
+    "speciesFI": "Lapintiira",
+    "speciesSV": "Silvertärna",
+    "speciesEN": "Arctic Tern",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "STEALB",
+    "speciesSCI": "Sterna albifrons",
+    "speciesFI": "Pikkutiira",
+    "speciesSV": "Småtärna",
+    "speciesEN": "Little Tern",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CHLNIG",
+    "speciesSCI": "Chlidonias niger",
+    "speciesFI": "Mustatiira",
+    "speciesSV": "Svarttärna",
+    "speciesEN": "Black Tern",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "URIAAL",
+    "speciesSCI": "Uria aalge",
+    "speciesFI": "Etelänkiisla",
+    "speciesSV": "Sillgrissla",
+    "speciesEN": "Guillemot",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ALCTOR",
+    "speciesSCI": "Alca torda",
+    "speciesFI": "Ruokki",
+    "speciesSV": "Tordmule",
+    "speciesEN": "Razorbill",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CEPGRY",
+    "speciesSCI": "Cepphus grylle",
+    "speciesFI": "Riskilä",
+    "speciesSV": "Tobisgrissla",
+    "speciesEN": "Black Guillemot",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "COLLIV",
+    "speciesSCI": "Columba livia",
+    "speciesFI": "Kesykyyhky",
+    "speciesSV": "Tamduva",
+    "speciesEN": "Rock Dove",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "COLOEN",
+    "speciesSCI": "Columba oenas",
+    "speciesFI": "Uuttukyyhky",
+    "speciesSV": "Skogsduva",
+    "speciesEN": "Stock Dove",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "COLPAL",
+    "speciesSCI": "Columba palumbus",
+    "speciesFI": "Sepelkyyhky",
+    "speciesSV": "Ringduva",
+    "speciesEN": "Wood Pigeon",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "STRDEC",
+    "speciesSCI": "Streptopelia decaocto",
+    "speciesFI": "Turkinkyyhky",
+    "speciesSV": "Turkduva",
+    "speciesEN": "Collared Dove",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "STRTUR",
+    "speciesSCI": "Streptopelia turtur",
+    "speciesFI": "Turturikyyhky",
+    "speciesSV": "Turturduva",
+    "speciesEN": "Turtle Dove",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CUCCAN",
+    "speciesSCI": "Cuculus canorus",
+    "speciesFI": "Käki",
+    "speciesSV": "Gök",
+    "speciesEN": "Cuckoo",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "BUBBUB",
+    "speciesSCI": "Bubo bubo",
+    "speciesFI": "Huuhkaja",
+    "speciesSV": "Berguv",
+    "speciesEN": "Eagle Owl",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "NYCSCA",
+    "speciesSCI": "Nyctea scandiaca",
+    "speciesFI": "Tunturipöllö",
+    "speciesSV": "Fjälluggla",
+    "speciesEN": "Snowy Owl",
+    "visibility": 0
+  },
+  {
+    "speciesAbbr": "SURULU",
+    "speciesSCI": "Surnia ulula",
+    "speciesFI": "Hiiripöllö",
+    "speciesSV": "Hökuggla",
+    "speciesEN": "Hawk Owl",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "GLAPAS",
+    "speciesSCI": "Glaucidium passerinum",
+    "speciesFI": "Varpuspöllö",
+    "speciesSV": "Sparvuggla",
+    "speciesEN": "Pygmy Owl",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "STRALU",
+    "speciesSCI": "Strix aluco",
+    "speciesFI": "Lehtopöllö",
+    "speciesSV": "Kattuggla",
+    "speciesEN": "Tawny Owl",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "STRURA",
+    "speciesSCI": "Strix uralensis",
+    "speciesFI": "Viirupöllö",
+    "speciesSV": "Slaguggla",
+    "speciesEN": "Ural Owl",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "STRNEB",
+    "speciesSCI": "Strix nebulosa",
+    "speciesFI": "Lapinpöllö",
+    "speciesSV": "Lappuggla",
+    "speciesEN": "Great Grey Owl",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ASIOTU",
+    "speciesSCI": "Asio otus",
+    "speciesFI": "Sarvipöllö",
+    "speciesSV": "Hornuggla",
+    "speciesEN": "Long-eared Owl",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ASIFLA",
+    "speciesSCI": "Asio flammeus",
+    "speciesFI": "Suopöllö",
+    "speciesSV": "Jorduggla",
+    "speciesEN": "Short-eared Owl",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "AEGFUN",
+    "speciesSCI": "Aegolius funereus",
+    "speciesFI": "Helmipöllö",
+    "speciesSV": "Pärluggla",
+    "speciesEN": "Tengmalm's Owl",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CAPEUR",
+    "speciesSCI": "Caprimulgus europaeus",
+    "speciesFI": "Kehrääjä",
+    "speciesSV": "Nattskärra",
+    "speciesEN": "Nightjar",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "APUAPU",
+    "speciesSCI": "Apus apus",
+    "speciesFI": "Tervapääsky",
+    "speciesSV": "Tornseglare",
+    "speciesEN": "Swift",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ALCATT",
+    "speciesSCI": "Alcedo atthis",
+    "speciesFI": "Kuningaskalastaja",
+    "speciesSV": "Kungsfiskare",
+    "speciesEN": "Kingfisher",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "JYNTOR",
+    "speciesSCI": "Jynx torquilla",
+    "speciesFI": "Käenpiika",
+    "speciesSV": "Göktyta",
+    "speciesEN": "Wryneck",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PICCAN",
+    "speciesSCI": "Picus canus",
+    "speciesFI": "Harmaapäätikka",
+    "speciesSV": "Gråspett",
+    "speciesEN": "Grey-headed Woodpecker",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "DRYMAR",
+    "speciesSCI": "Dryocopus martius",
+    "speciesFI": "Palokärki",
+    "speciesSV": "Spillkråka",
+    "speciesEN": "Black Woodpecker",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "DENMAJ",
+    "speciesSCI": "Dendrocopos major",
+    "speciesFI": "Käpytikka",
+    "speciesSV": "Större hackspett",
+    "speciesEN": "Great Spotted Woodpecker",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "DENLEU",
+    "speciesSCI": "Dendrocopos leucotos",
+    "speciesFI": "Valkoselkätikka",
+    "speciesSV": "Vitryggig hackspett",
+    "speciesEN": "White-backed Woodpecker",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "DENMIN",
+    "speciesSCI": "Dendrocopos minor",
+    "speciesFI": "Pikkutikka",
+    "speciesSV": "Mindre hackspett",
+    "speciesEN": "Lesser Spotted Woodpecker",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PICTRI",
+    "speciesSCI": "Picoides tridactylus",
+    "speciesFI": "Pohjantikka",
+    "speciesSV": "Tretåig hackspett",
+    "speciesEN": "Three-toed Woodpecker",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LULARB",
+    "speciesSCI": "Lullula arborea",
+    "speciesFI": "Kangaskiuru",
+    "speciesSV": "Trädlärka",
+    "speciesEN": "Woodlark",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ALAARV",
+    "speciesSCI": "Alauda arvensis",
+    "speciesFI": "Kiuru",
+    "speciesSV": "Sånglärka",
+    "speciesEN": "Skylark",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "EREALP",
+    "speciesSCI": "Eremophila alpestris",
+    "speciesFI": "Tunturikiuru",
+    "speciesSV": "Berglärka",
+    "speciesEN": "Shore Lark",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "RIPRIP",
+    "speciesSCI": "Riparia riparia",
+    "speciesFI": "Törmäpääsky",
+    "speciesSV": "Backsvala",
+    "speciesEN": "Sand Martin",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "HIRRUS",
+    "speciesSCI": "Hirundo rustica",
+    "speciesFI": "Haarapääsky",
+    "speciesSV": "Ladusvala",
+    "speciesEN": "Swallow",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "DELURB",
+    "speciesSCI": "Delichon urbicum",
+    "speciesFI": "Räystäspääsky",
+    "speciesSV": "Hussvala",
+    "speciesEN": "House Martin",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ANTCAM",
+    "speciesSCI": "Anthus campestris",
+    "speciesFI": "Nummikirvinen",
+    "speciesSV": "Fältpiplärka",
+    "speciesEN": "Tawny Pipit",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ANTTRI",
+    "speciesSCI": "Anthus trivialis",
+    "speciesFI": "Metsäkirvinen",
+    "speciesSV": "Trädpiplärka",
+    "speciesEN": "Tree Pipit",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ANTPRA",
+    "speciesSCI": "Anthus pratensis",
+    "speciesFI": "Niittykirvinen",
+    "speciesSV": "Ängspiplärka",
+    "speciesEN": "Meadow Pipit",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ANTCER",
+    "speciesSCI": "Anthus cervinus",
+    "speciesFI": "Lapinkirvinen",
+    "speciesSV": "Rödstrupig piplärka",
+    "speciesEN": "Red-throated Pipit",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ANTPET",
+    "speciesSCI": "Anthus petrosus",
+    "speciesFI": "Luotokirvinen",
+    "speciesSV": "Skärpiplärka",
+    "speciesEN": "Water Pipit",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "MOTFLA",
+    "speciesSCI": "Motacilla flava",
+    "speciesFI": "Keltavästäräkki",
+    "speciesSV": "Gulärla",
+    "speciesEN": "Yellow Wagtail",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "MOTCIT",
+    "speciesSCI": "Motacilla citreola",
+    "speciesFI": "Sitruunavästäräkki",
+    "speciesSV": "Citronärla",
+    "speciesEN": "Citrine Wagtail",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "MOTCIN",
+    "speciesSCI": "Motacilla cinerea",
+    "speciesFI": "Virtavästäräkki",
+    "speciesSV": "Forsärla",
+    "speciesEN": "Grey Wagtail",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "MOTALB",
+    "speciesSCI": "Motacilla alba",
+    "speciesFI": "Västäräkki",
+    "speciesSV": "Sädesärla",
+    "speciesEN": "White Wagtail",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "BOMGAR",
+    "speciesSCI": "Bombycilla garrulus",
+    "speciesFI": "Tilhi",
+    "speciesSV": "Sidensvans",
+    "speciesEN": "Waxwing",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CINCIN",
+    "speciesSCI": "Cinclus cinclus",
+    "speciesFI": "Koskikara",
+    "speciesSV": "Strömstare",
+    "speciesEN": "Dipper",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "TROTRO",
+    "speciesSCI": "Troglodytes troglodytes",
+    "speciesFI": "Peukaloinen",
+    "speciesSV": "Gärdsmyg",
+    "speciesEN": "Wren",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PRUMOD",
+    "speciesSCI": "Prunella modularis",
+    "speciesFI": "Rautiainen",
+    "speciesSV": "Järnsparv",
+    "speciesEN": "Dunnock",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ERIRUB",
+    "speciesSCI": "Erithacus rubecula",
+    "speciesFI": "Punarinta",
+    "speciesSV": "Rödhake",
+    "speciesEN": "Robin",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LUSLUS",
+    "speciesSCI": "Luscinia luscinia",
+    "speciesFI": "Satakieli",
+    "speciesSV": "Näktergal",
+    "speciesEN": "Thrush Nightingale",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LUSSVE",
+    "speciesSCI": "Luscinia svecica",
+    "speciesFI": "Sinirinta",
+    "speciesSV": "Blåhake",
+    "speciesEN": "Bluethroat",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "TARCYA",
+    "speciesSCI": "Luscinia cyanura",
+    "speciesFI": "Sinipyrstö",
+    "speciesSV": "Blåstjärt",
+    "speciesEN": "Red-flanked Bluetail",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PHOOCH",
+    "speciesSCI": "Phoenicurus ochruros",
+    "speciesFI": "Mustaleppälintu",
+    "speciesSV": "Svart rödstjärt",
+    "speciesEN": "Black Redstart",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PHOPHO",
+    "speciesSCI": "Phoenicurus phoenicurus",
+    "speciesFI": "Leppälintu",
+    "speciesSV": "Rödstjärt",
+    "speciesEN": "Redstart",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "SAXRUB",
+    "speciesSCI": "Saxicola rubetra",
+    "speciesFI": "Pensastasku",
+    "speciesSV": "Buskskvätta",
+    "speciesEN": "Whinchat",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "SAXTOR",
+    "speciesSCI": "Saxicola torquatus",
+    "speciesFI": "Mustapäätasku",
+    "speciesSV": "Svarthakad buskskvätta",
+    "speciesEN": "Stonechat",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "OENOEN",
+    "speciesSCI": "Oenanthe oenanthe",
+    "speciesFI": "Kivitasku",
+    "speciesSV": "Stenskvätta",
+    "speciesEN": "Wheatear",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "TURTOR",
+    "speciesSCI": "Turdus torquatus",
+    "speciesFI": "Sepelrastas",
+    "speciesSV": "Ringtrast",
+    "speciesEN": "Ring Ouzel",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "TURMER",
+    "speciesSCI": "Turdus merula",
+    "speciesFI": "Mustarastas",
+    "speciesSV": "Koltrast",
+    "speciesEN": "Blackbird",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "TURPIL",
+    "speciesSCI": "Turdus pilaris",
+    "speciesFI": "Räkättirastas",
+    "speciesSV": "Björktrast",
+    "speciesEN": "Fieldfare",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "TURPHI",
+    "speciesSCI": "Turdus philomelos",
+    "speciesFI": "Laulurastas",
+    "speciesSV": "Taltrast",
+    "speciesEN": "Song Thrush",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "TURILI",
+    "speciesSCI": "Turdus iliacus",
+    "speciesFI": "Punakylkirastas",
+    "speciesSV": "Rödvingetrast",
+    "speciesEN": "Redwing",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "TURVIS",
+    "speciesSCI": "Turdus viscivorus",
+    "speciesFI": "Kulorastas",
+    "speciesSV": "Dubbeltrast",
+    "speciesEN": "Mistle Thrush",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LOCNAE",
+    "speciesSCI": "Locustella naevia",
+    "speciesFI": "Pensassirkkalintu",
+    "speciesSV": "Gräshoppsångare",
+    "speciesEN": "Grasshopper Warbler",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LOCFLU",
+    "speciesSCI": "Locustella fluviatilis",
+    "speciesFI": "Viitasirkkalintu",
+    "speciesSV": "Flodsångare",
+    "speciesEN": "River Warbler",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LOCLUS",
+    "speciesSCI": "Locustella luscinioides",
+    "speciesFI": "Ruokosirkkalintu",
+    "speciesSV": "Vassångare",
+    "speciesEN": "Savi's Warbler",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ACRSCH",
+    "speciesSCI": "Acrocephalus schoenobaenus",
+    "speciesFI": "Ruokokerttunen",
+    "speciesSV": "Sävsångare",
+    "speciesEN": "Sedge Warbler",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ACRSCI",
+    "speciesSCI": "Acrocephalus scirpaceus",
+    "speciesFI": "Rytikerttunen",
+    "speciesSV": "Rörsångare",
+    "speciesEN": "Reed Warbler",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ACRRIS",
+    "speciesSCI": "Acrocephalus palustris",
+    "speciesFI": "Luhtakerttunen",
+    "speciesSV": "Kärrsångare",
+    "speciesEN": "Marsh Warbler",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ACRDUM",
+    "speciesSCI": "Acrocephalus dumetorum",
+    "speciesFI": "Viitakerttunen",
+    "speciesSV": "Busksångare",
+    "speciesEN": "Blyth's Reed Warbler",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ACRARU",
+    "speciesSCI": "Acrocephalus arundinaceus",
+    "speciesFI": "Rastaskerttunen",
+    "speciesSV": "Trastsångare",
+    "speciesEN": "Great Reed Warbler",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "HIPICT",
+    "speciesSCI": "Hippolais icterina",
+    "speciesFI": "Kultarinta",
+    "speciesSV": "Härmsångare",
+    "speciesEN": "Icterine Warbler",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "SYLATR",
+    "speciesSCI": "Sylvia atricapilla",
+    "speciesFI": "Mustapääkerttu",
+    "speciesSV": "Svarthätta",
+    "speciesEN": "Blackcap",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "SYLBOR",
+    "speciesSCI": "Sylvia borin",
+    "speciesFI": "Lehtokerttu",
+    "speciesSV": "Trädgårdssångare",
+    "speciesEN": "Garden Warbler",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "SYLNIS",
+    "speciesSCI": "Sylvia nisoria",
+    "speciesFI": "Kirjokerttu",
+    "speciesSV": "Höksångare",
+    "speciesEN": "Barred Warbler",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "SYLCUR",
+    "speciesSCI": "Sylvia curruca",
+    "speciesFI": "Hernekerttu",
+    "speciesSV": "Ärtsångare",
+    "speciesEN": "Lesser Whitethroat",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "SYLCOM",
+    "speciesSCI": "Sylvia communis",
+    "speciesFI": "Pensaskerttu",
+    "speciesSV": "Törnsångare",
+    "speciesEN": "Whitethroat",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PHYDES",
+    "speciesSCI": "Phylloscopus trochiloides",
+    "speciesFI": "Idänuunilintu",
+    "speciesSV": "Lundsångare",
+    "speciesEN": "Greenish Warbler",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PHYBOR",
+    "speciesSCI": "Phylloscopus borealis",
+    "speciesFI": "Lapinuunilintu",
+    "speciesSV": "Nordsångare",
+    "speciesEN": "Arctic Warbler",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PHYSIB",
+    "speciesSCI": "Phylloscopus sibilatrix",
+    "speciesFI": "Sirittäjä",
+    "speciesSV": "Grönsångare",
+    "speciesEN": "Wood Warbler",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PHYCOL",
+    "speciesSCI": "Phylloscopus collybita",
+    "speciesFI": "Tiltaltti",
+    "speciesSV": "Gransångare",
+    "speciesEN": "Chiffchaff",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PHYLUS",
+    "speciesSCI": "Phylloscopus trochilus",
+    "speciesFI": "Pajulintu",
+    "speciesSV": "Lövsångare",
+    "speciesEN": "Willow Warbler",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "REGREG",
+    "speciesSCI": "Regulus regulus",
+    "speciesFI": "Hippiäinen",
+    "speciesSV": "Kungsfågel",
+    "speciesEN": "Goldcrest",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "MUSSTR",
+    "speciesSCI": "Muscicapa striata",
+    "speciesFI": "Harmaasieppo",
+    "speciesSV": "Grå flugsnappare",
+    "speciesEN": "Spotted Flycatcher",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "FICPAR",
+    "speciesSCI": "Ficedula parva",
+    "speciesFI": "Pikkusieppo",
+    "speciesSV": "Mindre flugsnappare",
+    "speciesEN": "Red-breasted Flycatcher",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "FICHYP",
+    "speciesSCI": "Ficedula hypoleuca",
+    "speciesFI": "Kirjosieppo",
+    "speciesSV": "Svartvit flugsnappare",
+    "speciesEN": "Pied Flycatcher",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PANBIA",
+    "speciesSCI": "Panurus biarmicus",
+    "speciesFI": "Viiksitimali",
+    "speciesSV": "Skäggmes",
+    "speciesEN": "Bearded Tit",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "AEGCAU",
+    "speciesSCI": "Aegithalos caudatus",
+    "speciesFI": "Pyrstötiainen",
+    "speciesSV": "Stjärtmes",
+    "speciesEN": "Long-tailed Tit",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PARMON",
+    "speciesSCI": "Parus montanus",
+    "speciesFI": "Hömötiainen",
+    "speciesSV": "Talltita",
+    "speciesEN": "Willow Tit",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PARCIN",
+    "speciesSCI": "Parus cinctus",
+    "speciesFI": "Lapintiainen",
+    "speciesSV": "Lappmes",
+    "speciesEN": "Siberian Tit",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PARCRI",
+    "speciesSCI": "Parus cristatus",
+    "speciesFI": "Töyhtötiainen",
+    "speciesSV": "Tofsmes",
+    "speciesEN": "Crested Tit",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PARATE",
+    "speciesSCI": "Parus ater",
+    "speciesFI": "Kuusitiainen",
+    "speciesSV": "Svartmes",
+    "speciesEN": "Coal Tit",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PARCAE",
+    "speciesSCI": "Parus caeruleus",
+    "speciesFI": "Sinitiainen",
+    "speciesSV": "Blåmes",
+    "speciesEN": "Blue Tit",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PARCYA",
+    "speciesSCI": "Parus cyanus",
+    "speciesFI": "Valkopäätiainen",
+    "speciesSV": "Azurmes",
+    "speciesEN": "Azure Tit",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PARMAJ",
+    "speciesSCI": "Parus major",
+    "speciesFI": "Talitiainen",
+    "speciesSV": "Talgoxe",
+    "speciesEN": "Great Tit",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "SITEUR",
+    "speciesSCI": "Sitta europaea",
+    "speciesFI": "Pähkinänakkeli",
+    "speciesSV": "Nötväcka",
+    "speciesEN": "Nuthatch",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CERFAM",
+    "speciesSCI": "Certhia familiaris",
+    "speciesFI": "Puukiipijä",
+    "speciesSV": "Trädkrypare",
+    "speciesEN": "Treecreeper",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "REMPEN",
+    "speciesSCI": "Remiz pendulinus",
+    "speciesFI": "Pussitiainen",
+    "speciesSV": "Pungmes",
+    "speciesEN": "Penduline Tit",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "ORIORI",
+    "speciesSCI": "Oriolus oriolus",
+    "speciesFI": "Kuhankeittäjä",
+    "speciesSV": "Sommargylling",
+    "speciesEN": "Golden Oriole",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LANCOL",
+    "speciesSCI": "Lanius collurio",
+    "speciesFI": "Pikkulepinkäinen",
+    "speciesSV": "Törnskata",
+    "speciesEN": "Red-backed Shrike",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LANEXC",
+    "speciesSCI": "Lanius excubitor",
+    "speciesFI": "Isolepinkäinen",
+    "speciesSV": "Varfågel",
+    "speciesEN": "Great Grey Shrike",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "GARGLA",
+    "speciesSCI": "Garrulus glandarius",
+    "speciesFI": "Närhi",
+    "speciesSV": "Nötskrika",
+    "speciesEN": "Jay",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PERINF",
+    "speciesSCI": "Perisoreus infaustus",
+    "speciesFI": "Kuukkeli",
+    "speciesSV": "Lavskrika",
+    "speciesEN": "Siberian Jay",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PICPIC",
+    "speciesSCI": "Pica pica",
+    "speciesFI": "Harakka",
+    "speciesSV": "Skata",
+    "speciesEN": "Magpie",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "NUCCAR",
+    "speciesSCI": "Nucifraga caryocatactes",
+    "speciesFI": "Pähkinähakki",
+    "speciesSV": "Nötkråka",
+    "speciesEN": "Nutcracker",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CORMON",
+    "speciesSCI": "Corvus monedula",
+    "speciesFI": "Naakka",
+    "speciesSV": "Kaja",
+    "speciesEN": "Jackdaw",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CORFRU",
+    "speciesSCI": "Corvus frugilegus",
+    "speciesFI": "Mustavaris",
+    "speciesSV": "Råka",
+    "speciesEN": "Rook",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CORNIX",
+    "speciesSCI": "Corvus corone cornix",
+    "speciesFI": "Varis",
+    "speciesSV": "Kråka",
+    "speciesEN": "Hooded Crow",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CORRAX",
+    "speciesSCI": "Corvus corax",
+    "speciesFI": "Korppi",
+    "speciesSV": "Korp",
+    "speciesEN": "Raven",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "STUVUL",
+    "speciesSCI": "Sturnus vulgaris",
+    "speciesFI": "Kottarainen",
+    "speciesSV": "Stare",
+    "speciesEN": "Starling",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PASDOM",
+    "speciesSCI": "Passer domesticus",
+    "speciesFI": "Varpunen",
+    "speciesSV": "Gråsparv",
+    "speciesEN": "House Sparrow",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PASMON",
+    "speciesSCI": "Passer montanus",
+    "speciesFI": "Pikkuvarpunen",
+    "speciesSV": "Pilfink",
+    "speciesEN": "Tree Sparrow",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "FRICOE",
+    "speciesSCI": "Fringilla coelebs",
+    "speciesFI": "Peippo",
+    "speciesSV": "Bofink",
+    "speciesEN": "Chaffinch",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "FRIMON",
+    "speciesSCI": "Fringilla montifringilla",
+    "speciesFI": "Järripeippo",
+    "speciesSV": "Bergfink",
+    "speciesEN": "Brambling",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "SERSER",
+    "speciesSCI": "Serinus serinus",
+    "speciesFI": "Keltahemppo",
+    "speciesSV": "Gulhämpling",
+    "speciesEN": "Serin",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CARCHL",
+    "speciesSCI": "Carduelis chloris",
+    "speciesFI": "Viherpeippo",
+    "speciesSV": "Grönfink",
+    "speciesEN": "Greenfinch",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CARCAR",
+    "speciesSCI": "Carduelis carduelis",
+    "speciesFI": "Tikli",
+    "speciesSV": "Steglits",
+    "speciesEN": "Goldfinch",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CARSPI",
+    "speciesSCI": "Carduelis spinus",
+    "speciesFI": "Vihervarpunen",
+    "speciesSV": "Grönsiska",
+    "speciesEN": "Siskin",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CARCAN",
+    "speciesSCI": "Carduelis cannabina",
+    "speciesFI": "Hemppo",
+    "speciesSV": "Hämpling",
+    "speciesEN": "Linnet",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CARRIS",
+    "speciesSCI": "Carduelis flavirostris",
+    "speciesFI": "Vuorihemppo",
+    "speciesSV": "Vinterhämpling",
+    "speciesEN": "Twite",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CARMEA",
+    "speciesSCI": "Carduelis flammea",
+    "speciesFI": "Urpiainen",
+    "speciesSV": "Gråsiska",
+    "speciesEN": "Redpoll",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CARHOR",
+    "speciesSCI": "Carduelis hornemanni",
+    "speciesFI": "Tundraurpiainen",
+    "speciesSV": "Snösiska",
+    "speciesEN": "Arctic Redpoll",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LOXLEU",
+    "speciesSCI": "Loxia leucoptera",
+    "speciesFI": "Kirjosiipikäpylintu",
+    "speciesSV": "Bändelkorsnäbb",
+    "speciesEN": "Two-barred Crossbill",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LOXCUR",
+    "speciesSCI": "Loxia curvirostra",
+    "speciesFI": "Pikkukäpylintu",
+    "speciesSV": "Mindre korsnäbb",
+    "speciesEN": "Crossbill",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "LOXPYT",
+    "speciesSCI": "Loxia pytyopsittacus",
+    "speciesFI": "Isokäpylintu",
+    "speciesSV": "Större korsnäbb",
+    "speciesEN": "Parrot Crossbill",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CARERY",
+    "speciesSCI": "Carpodacus erythrinus",
+    "speciesFI": "Punavarpunen",
+    "speciesSV": "Rosenfink",
+    "speciesEN": "Scarlet Rosefinch",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PINENU",
+    "speciesSCI": "Pinicola enucleator",
+    "speciesFI": "Taviokuurna",
+    "speciesSV": "Tallbit",
+    "speciesEN": "Pine Grosbeak",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PYRPYR",
+    "speciesSCI": "Pyrrhula pyrrhula",
+    "speciesFI": "Punatulkku",
+    "speciesSV": "Domherre",
+    "speciesEN": "Bullfinch",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "COCCOC",
+    "speciesSCI": "Coccothraustes coccothraustes",
+    "speciesFI": "Nokkavarpunen",
+    "speciesSV": "Stenknäck",
+    "speciesEN": "Hawfinch",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "CALLAP",
+    "speciesSCI": "Calcarius lapponicus",
+    "speciesFI": "Lapinsirkku",
+    "speciesSV": "Lappsparv",
+    "speciesEN": "Lapland Bunting",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "PLENIV",
+    "speciesSCI": "Plectrophenax nivalis",
+    "speciesFI": "Pulmunen",
+    "speciesSV": "Snösparv",
+    "speciesEN": "Snow Bunting",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "EMBCIT",
+    "speciesSCI": "Emberiza citrinella",
+    "speciesFI": "Keltasirkku",
+    "speciesSV": "Gulsparv",
+    "speciesEN": "Yellowhammer",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "EMBHOR",
+    "speciesSCI": "Emberiza hortulana",
+    "speciesFI": "Peltosirkku",
+    "speciesSV": "Ortolansparv",
+    "speciesEN": "Ortolan Bunting",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "EMBRUS",
+    "speciesSCI": "Emberiza rustica",
+    "speciesFI": "Pohjansirkku",
+    "speciesSV": "Videsparv",
+    "speciesEN": "Rustic Bunting",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "EMBPUS",
+    "speciesSCI": "Emberiza pusilla",
+    "speciesFI": "Pikkusirkku",
+    "speciesSV": "Dvärgsparv",
+    "speciesEN": "Little Bunting",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "EMBAUR",
+    "speciesSCI": "Emberiza aureola",
+    "speciesFI": "Kultasirkku",
+    "speciesSV": "Gyllensparv",
+    "speciesEN": "Yellow-breasted Bunting",
+    "visibility": 1
+  },
+  {
+    "speciesAbbr": "EMBSCH",
+    "speciesSCI": "Emberiza schoeniclus",
+    "speciesFI": "Pajusirkku",
+    "speciesSV": "Sävsparv",
+    "speciesEN": "Reed Bunting",
+    "visibility": 1
+  }
+]
