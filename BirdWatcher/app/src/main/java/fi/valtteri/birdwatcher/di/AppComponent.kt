@@ -4,13 +4,15 @@ import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
+import fi.valtteri.birdwatcher.BirdWatcherApp
 import javax.inject.Singleton
 
 @Singleton
 @Component(
     modules = [
         AndroidSupportInjectionModule::class,
-        DatabaseModule::class
+        AppModule::class,
+        MainActivityModule::class
     ]
 )
 interface AppComponent {
@@ -20,9 +22,12 @@ interface AppComponent {
         @BindsInstance
         fun application(app: Application): Builder
 
+
+
         fun build() : AppComponent
     }
 
-    fun inject(application: Application)
+    fun inject(application: BirdWatcherApp)
+
 
 }

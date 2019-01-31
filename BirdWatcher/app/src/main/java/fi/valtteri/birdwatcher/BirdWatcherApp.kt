@@ -7,7 +7,8 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.support.HasSupportFragmentInjector
-import fi.valtteri.birdwatcher.di.DaggerApplicationComponent
+import fi.valtteri.birdwatcher.di.DaggerAppComponent
+import timber.log.Timber
 import javax.inject.Inject
 
 class BirdWatcherApp : Application(), HasActivityInjector, HasSupportFragmentInjector {
@@ -20,7 +21,8 @@ class BirdWatcherApp : Application(), HasActivityInjector, HasSupportFragmentInj
 
     override fun onCreate() {
         super.onCreate()
-        DaggerApplicationComponent
+        Timber.plant(Timber.DebugTree())
+        DaggerAppComponent
             .builder()
             .application(this)
             .build()

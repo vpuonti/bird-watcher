@@ -1,4 +1,4 @@
-package fi.valtteri.birdwatcher.ui
+package fi.valtteri.birdwatcher.ui.observations
 
 import androidx.lifecycle.ViewModel;
 

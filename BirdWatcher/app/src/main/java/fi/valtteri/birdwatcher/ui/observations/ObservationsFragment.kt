@@ -1,4 +1,4 @@
-package fi.valtteri.birdwatcher.ui
+package fi.valtteri.birdwatcher.ui.observations
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -10,10 +10,6 @@ import android.view.ViewGroup
 import fi.valtteri.birdwatcher.R
 
 class ObservationsFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = ObservationsFragment()
-    }
 
     private lateinit var viewModel: ObservationsViewModel
 
