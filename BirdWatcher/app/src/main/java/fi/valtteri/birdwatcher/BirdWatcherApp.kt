@@ -11,13 +11,11 @@ import fi.valtteri.birdwatcher.di.DaggerAppComponent
 import timber.log.Timber
 import javax.inject.Inject
 
-class BirdWatcherApp : Application(), HasActivityInjector, HasSupportFragmentInjector {
+class BirdWatcherApp : Application(), HasActivityInjector {
 
     @Inject
     lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
 
-    @Inject
-    lateinit var dispatchingFragmentInjector: DispatchingAndroidInjector<Fragment>
 
     override fun onCreate() {
         super.onCreate()
@@ -33,8 +31,5 @@ class BirdWatcherApp : Application(), HasActivityInjector, HasSupportFragmentInj
         return dispatchingActivityInjector
     }
 
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
-        return dispatchingFragmentInjector
-    }
 
 }
