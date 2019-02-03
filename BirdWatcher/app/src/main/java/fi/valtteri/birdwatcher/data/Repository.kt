@@ -5,6 +5,7 @@ import fi.valtteri.birdwatcher.data.entities.Observation
 import fi.valtteri.birdwatcher.data.entities.Species
 import io.reactivex.Flowable
 import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import org.joda.time.DateTime
 import timber.log.Timber
 import javax.inject.Inject
@@ -18,12 +19,14 @@ class Repository @Inject constructor(
 ) {
 
     fun getSpecies() : Flowable<List<Species>> {
-        val lastUpdated: String? = sharedPreferences.getString(SPECIES_FETCHED, null)
+        //val lastUpdated: String? = sharedPreferences.getString(SPECIES_FETCHED, null)
+        val lastUpdated: String? = null
         if (lastUpdated == null) {
             Timber.d("Last updated not found... Updating species from API.")
             birdService.getSpecies()
+                .subscribeOn(Schedulers.io())
                 .doOnNext { Timber.d("Api returned ${it.size} species") }
-                .subscribe {speciesDao.insert(*it.toTypedArray())}
+                .subscribe ({speciesDao.insert(*it.toTypedArray())}, {Timber.e("Bird service error: ${it}")})
             sharedPreferences.edit().putString(SPECIES_FETCHED, DateTime.now().toString()).apply()
 
         } else {
@@ -34,6 +37,7 @@ class Repository @Inject constructor(
             .filter { it.isNotEmpty() }
             .doOnNext { Timber.d("Returning ${it.size} species") }
     }
+
 
 
 

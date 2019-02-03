@@ -1,14 +1,17 @@
 package fi.valtteri.birdwatcher.ui.addentry
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModel
 import fi.valtteri.birdwatcher.data.Repository
+import fi.valtteri.birdwatcher.data.entities.Species
 import javax.inject.Inject
 
-class AddEntryViewModel @Inject constructor(val repository: Repository) : ViewModel() {
+class AddEntryViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
 
-    fun getSpecies() = LiveDataReactiveStreams.fromPublisher(repository.getSpecies())
+    fun getSpecies(): LiveData<List<Species>> = LiveDataReactiveStreams.fromPublisher(repository.getSpecies())
+
 
 
 }

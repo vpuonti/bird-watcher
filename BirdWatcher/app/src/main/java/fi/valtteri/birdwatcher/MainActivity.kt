@@ -26,19 +26,15 @@ class MainActivity : AppCompatActivity(),
     HasSupportFragmentInjector,
     BottomNavigationView.OnNavigationItemSelectedListener
 {
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = supportFragmentInjector
+
     @Inject
     lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
+
 
     @Inject
     lateinit var locationService: LocationService
 
-    @Inject
-    lateinit var observationsFragment: ObservationsFragment
-
-    @Inject
-    lateinit var addEntryFragment: AddEntryFragment
-
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> = supportFragmentInjector
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -97,7 +93,7 @@ class MainActivity : AppCompatActivity(),
 
     private fun handleFabClick(view: View) {
         supportFragmentManager.beginTransaction()
-            .add(main_view.id, addEntryFragment)
+            .add(main_view.id, AddEntryFragment.getInstance())
             .addToBackStack(null)
             .commit()
     }

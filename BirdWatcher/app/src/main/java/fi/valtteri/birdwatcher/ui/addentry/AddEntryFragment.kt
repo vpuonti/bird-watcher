@@ -35,4 +35,8 @@ class AddEntryFragment : Fragment() {
         })
     }
 
+    companion object {
+        fun getInstance() = AddEntryFragment()
+    }
+
 }

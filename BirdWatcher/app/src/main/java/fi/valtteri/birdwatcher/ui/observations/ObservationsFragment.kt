@@ -24,7 +24,6 @@ class ObservationsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AndroidSupportInjection.inject(this)
         return inflater.inflate(R.layout.observations_fragment, container, false)
     }
 

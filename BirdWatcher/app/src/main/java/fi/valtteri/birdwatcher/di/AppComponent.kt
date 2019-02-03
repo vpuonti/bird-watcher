@@ -13,7 +13,7 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         AppModule::class,
         MainActivityModule::class,
-    ViewModelModule::class
+        ViewModelModule::class
     ]
 )
 interface AppComponent {

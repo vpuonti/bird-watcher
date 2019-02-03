@@ -10,7 +10,7 @@ import dagger.Provides
 import fi.valtteri.birdwatcher.data.BirdService
 import okhttp3.*
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.InputStream
 import javax.inject.Singleton
@@ -72,9 +72,9 @@ class AppModule {
     @Singleton
     fun provideRetrofit(moshi: Moshi): Retrofit {
         return Retrofit.Builder()
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl("bla")
+            .baseUrl("http://www.valtteripuonti.com")
             .build()
     }
 
