@@ -17,6 +17,7 @@ class DatabaseModule {
             app,
             AppDatabase::class.java,
             "bird_watcher_db")
+            .fallbackToDestructiveMigration()
             .build()
     }
 

@@ -18,4 +18,9 @@
         <item>Swedish</item>
     </string-array>
 
+    <string name="location_rationale">BirdWatcher adds coordinates to each observation. Please allow location!</string>
+    <string name="add_species">Set species</string>
+    <string name="timestamp">Timestamp</string>
+    <string name="rarity">Rarity</string>
+
 </resources>

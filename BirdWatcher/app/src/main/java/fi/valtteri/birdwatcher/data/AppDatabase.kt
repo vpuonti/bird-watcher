@@ -6,8 +6,9 @@ import androidx.room.TypeConverters
 import fi.valtteri.birdwatcher.data.entities.Observation
 import fi.valtteri.birdwatcher.data.entities.Species
 
-@Database(entities = [Species::class, Observation::class], version = 1, exportSchema = false)
-@TypeConverters(ObservationRarityTypeConverter::class)
+@Database(entities = [Species::class, Observation::class], version = 3
+    , exportSchema = false)
+@TypeConverters(ObservationRarityTypeConverter::class, DateTimeTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun speciesDao(): SpeciesDao

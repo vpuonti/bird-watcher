@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel
 import fi.valtteri.birdwatcher.R
 import fi.valtteri.birdwatcher.data.SettingsRepository
 import fi.valtteri.birdwatcher.data.SpeciesRepository
+import fi.valtteri.birdwatcher.data.entities.Observation
+import fi.valtteri.birdwatcher.data.entities.ObservationRarity
 import fi.valtteri.birdwatcher.data.entities.Species
 import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,9 +31,11 @@ class AddEntryViewModel @Inject constructor(
     private val speciesData: MutableLiveData<List<Species>> = MutableLiveData()
     private val speciesNames: MutableLiveData<List<String>> = MutableLiveData()
 
-    private var entryTimestamp: DateTime? = null
 
+    // data to make observation
+    private var entryTimestamp: DateTime? = null
     private var entryPicFileName: String? = null
+    private var rarity: ObservationRarity? = null
 
     fun getSpecies(): LiveData<List<Species>> {
         scope.launch(Dispatchers.IO) {
@@ -79,10 +83,14 @@ class AddEntryViewModel @Inject constructor(
     }
 
 
-    fun initializeNewEntry() {
+    fun initializeNewEntry(){
         entryTimestamp = DateTime.now()
         entryPicFileName = "${entryTimestamp?.millis}_bird.jpg"
 
+    }
+
+    fun setEntryRarity(rarity: ObservationRarity) {
+        this.rarity = rarity
     }
 
     override fun onCleared() {
