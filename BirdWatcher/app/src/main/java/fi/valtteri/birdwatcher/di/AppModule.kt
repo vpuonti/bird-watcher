@@ -47,7 +47,7 @@ class AppModule {
             val url: HttpUrl = chain.request().url()
             var response = ""
             when(url.encodedPath()) {
-                "species" -> {
+                "/species" -> {
                     val inputStream: InputStream = context.assets.open("species-names.json")
                     response = String(inputStream.readBytes(), Charsets.UTF_8)
                     inputStream.close()
@@ -70,11 +70,12 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(moshi: Moshi): Retrofit {
+    fun provideRetrofit(moshi: Moshi, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
+            .client(okHttpClient)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl("http://www.valtteripuonti.com")
+            .baseUrl("http://valtteripuonti.com/")
             .build()
     }
 

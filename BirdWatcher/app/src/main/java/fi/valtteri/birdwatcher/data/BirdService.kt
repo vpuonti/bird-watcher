@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface BirdService {
 
-    @GET("species")
+    @GET("/species")
     fun getSpecies() : Observable<List<Species>>
 
 }

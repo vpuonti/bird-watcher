@@ -15,4 +15,7 @@ interface SpeciesDao {
     @Query("SELECT * FROM species")
     fun getSpecies() : Flowable<List<Species>>
 
+    @Query("DELETE FROM species")
+    fun deleteAll()
+
 }

@@ -4,23 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.addentry.AddEntryActivity">
+    tools:context=".ui.addentry.AddEntryActivity"
+    android:fitsSystemWindows="true"
+>
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:expandedTitleMarginStart="48dp"
+                app:expandedTitleMarginTop="64dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                app:contentScrim="@color/colorPrimary"
+                android:layout_gravity="top"
+                app:expandedTitleGravity="top"
+                app:titleEnabled="false"
+        >
 
+
+        <ImageView
+                android:id="@+id/collapsing_imageview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_launcher_background"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.7"
+        />
+
+            <androidx.appcompat.widget.Toolbar
+                    android:layout_gravity="bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    android:id="@+id/toolbar"
+                    app:title="@string/new_observation"
+            />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_add_entry" />
+    <androidx.core.widget.NestedScrollView
+            android:fillViewport="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
+        <include layout="@layout/content_add_entry" />
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -28,6 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@drawable/ic_add_a_photo_white_24dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+

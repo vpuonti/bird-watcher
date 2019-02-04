@@ -3,4 +3,19 @@
     <string name="main">Main</string>
     <string name="observations">Observations</string>
     <string name="settings">Settings</string>
+
+    <string name="new_observation">New Observation</string>
+    <string name="description">Description</string>
+    <string name="title_activity_add_entry">AddEntryActivity</string>
+    <string name="species">Species</string>
+
+    <string name="settings_species_language">Species name format</string>
+
+    <string-array name="species_language_choices">
+        <item>Scientific</item>
+        <item>Finnish</item>
+        <item>English</item>
+        <item>Swedish</item>
+    </string-array>
+
 </resources>

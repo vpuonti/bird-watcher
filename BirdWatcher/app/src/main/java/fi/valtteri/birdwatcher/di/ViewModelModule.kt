@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import fi.valtteri.birdwatcher.ui.addentry.AddEntryFragment
+import fi.valtteri.birdwatcher.ui.settings.SettingsViewModel
 import fi.valtteri.birdwatcher.ui.addentry.AddEntryViewModel
 import fi.valtteri.birdwatcher.ui.observations.ObservationsViewModel
 import javax.inject.Singleton
@@ -22,6 +22,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(AddEntryViewModel::class)
     abstract fun bindAddEntryViewModel(addEntryViewModel: AddEntryViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingsViewModel::class)
+    abstract fun bindSettingsViewModel(settingsViewModel: SettingsViewModel): ViewModel
 
     @Binds
     @Singleton

@@ -1,5 +1,6 @@
 package fi.valtteri.birdwatcher.data
 
+import android.content.Context
 import android.content.SharedPreferences
 import fi.valtteri.birdwatcher.data.entities.Observation
 import fi.valtteri.birdwatcher.data.entities.Species
@@ -18,10 +19,12 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class Repository @Inject constructor(
+class SpeciesRepository @Inject constructor(
     var speciesDao: SpeciesDao,
     var birdService: BirdService,
-    var sharedPreferences: SharedPreferences
+    var sharedPreferences: SharedPreferences,
+    val settingsRepository: SettingsRepository,
+    val context: Context
 ) {
 
     fun getSpecies() : Flowable<List<Species>> {
@@ -55,6 +58,7 @@ class Repository @Inject constructor(
 
         return !(lastUpdated == null || Seconds.secondsBetween(lastUpdated, DateTime.now()).seconds > 5)
     }
+
 
 
     init {

@@ -13,7 +13,7 @@ import dagger.android.support.AndroidSupportInjection
 import fi.valtteri.birdwatcher.R
 import javax.inject.Inject
 
-class AddEntryFragment : Fragment() {
+class SpeciesSelectionFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -25,7 +25,7 @@ class AddEntryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         AndroidSupportInjection.inject(this)
-        return inflater.inflate(R.layout.add_entry_fragment, container, false)
+        return inflater.inflate(R.layout.species_selection_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -37,7 +37,7 @@ class AddEntryFragment : Fragment() {
     }
 
     companion object {
-        fun getInstance() = AddEntryFragment()
+        fun getInstance() = SpeciesSelectionFragment()
     }
 
 }

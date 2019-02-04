@@ -1,7 +1,14 @@
-package fi.valtteri.birdwatcher.ui
+package fi.valtteri.birdwatcher.ui.settings
 
+import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel;
+import javax.inject.Inject
 
-class SettingsViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+class SettingsViewModel @Inject constructor(
+
+) : ViewModel() {
+
+
+
+
 }
