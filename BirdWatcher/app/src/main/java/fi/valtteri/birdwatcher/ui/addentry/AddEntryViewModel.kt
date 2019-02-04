@@ -3,13 +3,17 @@ package fi.valtteri.birdwatcher.ui.addentry
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import fi.valtteri.birdwatcher.data.SettingsRepository
 import fi.valtteri.birdwatcher.data.SpeciesRepository
 import fi.valtteri.birdwatcher.data.entities.Species
 import kotlinx.coroutines.*
 import org.joda.time.DateTime
 import javax.inject.Inject
 
-class AddEntryViewModel @Inject constructor(private val speciesRepository: SpeciesRepository) : ViewModel() {
+class AddEntryViewModel @Inject constructor(
+    private val speciesRepository: SpeciesRepository,
+    private val settingsRepository: SettingsRepository
+) : ViewModel() {
 
     private val job = Job()
     private val scope = CoroutineScope(Dispatchers.Main + job)
