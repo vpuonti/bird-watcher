@@ -23,7 +23,6 @@ class SpeciesRepository @Inject constructor(
     var speciesDao: SpeciesDao,
     var birdService: BirdService,
     var sharedPreferences: SharedPreferences,
-    val settingsRepository: SettingsRepository,
     val context: Context
 ) {
 
