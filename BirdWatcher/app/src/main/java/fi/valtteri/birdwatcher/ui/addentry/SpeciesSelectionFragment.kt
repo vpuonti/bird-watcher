@@ -32,6 +32,7 @@ class AddEntryFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AddEntryViewModel::class.java)
         viewModel.getSpecies().observe(this, Observer {species ->
+
         })
     }
 
