@@ -20,10 +20,10 @@ import javax.inject.Singleton
 
 @Singleton
 class SpeciesRepository @Inject constructor(
-    var speciesDao: SpeciesDao,
-    var birdService: BirdService,
-    var sharedPreferences: SharedPreferences,
-    val context: Context
+    private val speciesDao: SpeciesDao,
+    private val birdService: BirdService,
+    private val sharedPreferences: SharedPreferences,
+    private val context: Context
 ) {
 
     fun getSpecies() : Flowable<List<Species>> {

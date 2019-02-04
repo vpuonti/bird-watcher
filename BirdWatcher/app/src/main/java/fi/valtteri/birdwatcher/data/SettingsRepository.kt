@@ -14,8 +14,8 @@ import javax.inject.Singleton
 
 @Singleton
 class SettingsRepository @Inject constructor(
-        val context: Context,
-        val sharedPreferences: SharedPreferences
+        private val context: Context,
+        private val sharedPreferences: SharedPreferences
 ) : SharedPreferences.OnSharedPreferenceChangeListener
 {
 
@@ -23,7 +23,15 @@ class SettingsRepository @Inject constructor(
 
     init {
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        val selectedLang = sharedPreferences.getString(SPECIES_LANGUAGE_PREFERENCE, null)
+        //set initial value if none set
+        if(selectedLang == null) {
+            sharedPreferences.edit().putString(SPECIES_LANGUAGE_PREFERENCE,
+                context.resources.getStringArray(R.array.species_language_choices)[0])
+                .apply()
+        }
     }
+
 
     fun setSpeciesLanguagePref(preference: String) {
         val choices = context.resources.getStringArray(R.array.species_language_choices)

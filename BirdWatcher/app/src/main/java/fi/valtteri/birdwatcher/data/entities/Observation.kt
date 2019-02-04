@@ -1,14 +1,16 @@
 package fi.valtteri.birdwatcher.data.entities
 
-import android.location.Location
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
 
-@Entity
+@Entity(tableName = "observations")
 data class Observation (
-    @PrimaryKey
-    val id: UUID,
-    val location: Location
-    )
+    @PrimaryKey (autoGenerate = true)
+    val id: Int,
+    val speciesId: Int,
+    val latitude: Double? = null,
+    val longitude: Double? = null,
+    val rarity: ObservationRarity,
+    val picName: String? = null
+)
 

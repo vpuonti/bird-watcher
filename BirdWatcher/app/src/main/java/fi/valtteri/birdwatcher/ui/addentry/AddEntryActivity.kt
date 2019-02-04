@@ -9,6 +9,7 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import dagger.android.AndroidInjection
@@ -16,6 +17,7 @@ import dagger.android.support.AndroidSupportInjection
 import fi.valtteri.birdwatcher.R
 import kotlinx.android.synthetic.main.activity_add_entry.*
 import kotlinx.android.synthetic.main.content_add_entry.*
+import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
@@ -27,6 +29,10 @@ class AddEntryActivity : AppCompatActivity() {
 
     lateinit var viewModel: AddEntryViewModel
 
+    lateinit var adapter: ArrayAdapter<String>
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
@@ -35,10 +41,20 @@ class AddEntryActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         collapsing_toolbar.title = resources.getText(R.string.new_observation)
 
+        adapter = ArrayAdapter(this, android.R.layout.select_dialog_item, mutableListOf())
+        input_observation_species.setAdapter(adapter)
+        input_observation_species.threshold = 1
+
         fab.setOnClickListener(this::handleFabClick)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AddEntryViewModel::class.java)
         viewModel.initializeNewEntry()
+
+        viewModel.getSpeciesNames().observe(this, Observer {names ->
+            adapter.clear()
+            adapter.addAll(names)
+            Timber.d("Adding ${names.size} names to species autocompletetextview")
+        })
 
 
     }
