@@ -65,6 +65,7 @@ class AddEntryActivity : AppCompatActivity() {
 
     lateinit var entryFileName: String
     private var entryFile: File? = null
+    private var currentPicUri: Uri? = null
 
 
 
@@ -134,6 +135,13 @@ class AddEntryActivity : AppCompatActivity() {
         })
 
         viewModel.getEntryPicFileName().observe(this, Observer { entryFileName = it })
+
+        viewModel.getEntryPicUri().observe(this, Observer { uri ->
+            currentPicUri = uri
+            Glide.with(this)
+                .load(uri)
+                .into(collapsing_imageview)
+        })
 
         // observe location
         locationService.getLocation().observe(this, Observer { location ->
@@ -304,10 +312,15 @@ class AddEntryActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == PICTURE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             entryFile?.also { file ->
+                //new pic uri
                 val uri = Uri.fromFile(file)
-                Glide.with(this)
-                    .load(uri)
-                    .into(collapsing_imageview)
+                //delete old pic
+                currentPicUri?.also { oldPicUri ->
+                    val oldPic = File(oldPicUri.path)
+                    oldPic.delete()
+                }
+
+                viewModel.setPictureUri(uri)
 
             }
         }

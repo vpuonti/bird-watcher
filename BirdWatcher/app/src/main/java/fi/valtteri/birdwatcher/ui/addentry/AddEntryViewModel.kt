@@ -1,6 +1,7 @@
 package fi.valtteri.birdwatcher.ui.addentry
 
 import android.content.Context
+import android.net.Uri
 import android.os.Environment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
@@ -11,14 +12,17 @@ import fi.valtteri.birdwatcher.data.SpeciesRepository
 import fi.valtteri.birdwatcher.data.entities.ObservationRarity
 import fi.valtteri.birdwatcher.data.entities.Species
 import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.BiFunction
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelChildren
 import org.joda.time.DateTime
+import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import javax.inject.Inject
@@ -38,21 +42,29 @@ class AddEntryViewModel @Inject constructor(
 
 
     // data to make observation
-    //private var entryTimestamp: DateTime? = null
-    //private var entryPicFileName: String? = null
     private var rarity: ObservationRarity? = null
 
     private val entryTimestamp: BehaviorSubject<DateTime> = BehaviorSubject.create()
     private val entrySpeciesName: BehaviorSubject<String> = BehaviorSubject.createDefault("")
     private val entryDescription: BehaviorSubject<String> = BehaviorSubject.createDefault("")
     private val entryPicFileName: Observable<String> = entryTimestamp.map { "${it.millis}_bird" }
+    private val entryPicUri: BehaviorSubject<Uri> = BehaviorSubject.create()
 
+    private val nameGucci = entrySpeciesName.map { it.isNotEmpty() }.toFlowable(BackpressureStrategy.LATEST).toObservable()
+    private val descGucci = entryDescription.map { it.isNotEmpty() }.toFlowable(BackpressureStrategy.LATEST).toObservable()
+
+    private val allGucci = BehaviorSubject.combineLatest<String, String, Boolean>(
+        entryDescription, entrySpeciesName,
+            BiFunction { desc: String, name: String ->
+                return@BiFunction (desc.isNotEmpty() && name.isNotEmpty())
+            }
+        )
+        .subscribe {
+            Timber.d("All gucci: $it")
+        }
 
     init {
         val speciesDisposable = speciesRepository.getSpecies().subscribe { it -> speciesData.postValue(it) }
-        val fileDisposable = entryPicFileName.subscribe{fileName ->
-
-        }
 
         compositeDisposable.addAll(speciesDisposable)
     }
@@ -68,6 +80,7 @@ class AddEntryViewModel @Inject constructor(
     fun getEntrySpeciesName() = LiveDataReactiveStreams.fromPublisher(entrySpeciesName.toFlowable(BackpressureStrategy.LATEST))
     fun getEntryDescription() = LiveDataReactiveStreams.fromPublisher(entryDescription.toFlowable(BackpressureStrategy.LATEST))
     fun getEntryPicFileName() = LiveDataReactiveStreams.fromPublisher(entryPicFileName.toFlowable(BackpressureStrategy.LATEST))
+    fun getEntryPicUri() = LiveDataReactiveStreams.fromPublisher(entryPicUri.toFlowable(BackpressureStrategy.LATEST))
 
     fun initializeNewEntry(){
         entryTimestamp.onNext(DateTime.now())
@@ -84,6 +97,10 @@ class AddEntryViewModel @Inject constructor(
 
     fun setEntryDescription(desc: String) {
         entryDescription.onNext(desc)
+    }
+
+    fun setPictureUri(uri: Uri) {
+        entryPicUri.onNext(uri)
     }
 
     override fun onCleared() {
