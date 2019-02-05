@@ -6,11 +6,10 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
-import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
@@ -18,10 +17,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 import dagger.android.AndroidInjection
@@ -31,11 +32,10 @@ import fi.valtteri.birdwatcher.location.LocationService
 import kotlinx.android.synthetic.main.activity_add_entry.*
 import kotlinx.android.synthetic.main.content_add_entry.*
 import kotlinx.android.synthetic.main.species_selector_layout.view.*
-import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import org.joda.time.format.DateTimeFormatter
 import timber.log.Timber
-import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.IOException
 import javax.inject.Inject
 
 
@@ -62,6 +62,10 @@ class AddEntryActivity : AppCompatActivity() {
 
     lateinit var permissionsRationaleDialog: AlertDialog
     lateinit var speciesSelectionDialog: AlertDialog
+
+    lateinit var entryFileName: String
+    private var entryFile: File? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -128,6 +132,8 @@ class AddEntryActivity : AppCompatActivity() {
                 descriptionInputLayout.error = null
             }
         })
+
+        viewModel.getEntryPicFileName().observe(this, Observer { entryFileName = it })
 
         // observe location
         locationService.getLocation().observe(this, Observer { location ->
@@ -250,13 +256,42 @@ class AddEntryActivity : AppCompatActivity() {
 
 
     private fun dispatchTakePictureIntent() {
+
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(packageManager)?.also {
-                startActivityForResult(takePictureIntent, PICTURE_REQUEST_CODE)
+
+                val photoFile: File? = try {
+                    createPictureFile()
+                } catch (ex: IOException) {
+                    Timber.e("Error creating file: $ex")
+                    null
+                }
+                photoFile?.also {
+                        val photoUri: Uri = FileProvider.getUriForFile(
+                            this,
+                            "fi.valtteri.birdwatcher.fileprovider",
+                            it
+                        )
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+                        startActivityForResult(takePictureIntent, PICTURE_REQUEST_CODE)
+                    }
+
             }
         }
 
     }
+
+    private fun createPictureFile() : File {
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val file = File.createTempFile(
+            entryFileName,
+            ".jpg",
+            storageDir
+        )
+        entryFile = file
+        return file
+    }
+
 
     private fun handleSpeciesSelectionClick(view: View) {
         speciesSelectionDialog.show()
@@ -268,17 +303,13 @@ class AddEntryActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == PICTURE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val bmp = data?.extras?.get("data") as Bitmap
-            val stream = ByteArrayOutputStream()
-            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream)
-            val byteArray = stream.toByteArray()
-            val bitmap = BitmapFactory.decodeByteArray(
-                byteArray, 0,
-                byteArray.size
-            )
+            entryFile?.also { file ->
+                val uri = Uri.fromFile(file)
+                Glide.with(this)
+                    .load(uri)
+                    .into(collapsing_imageview)
 
-            collapsing_imageview.setImageBitmap(bitmap)
-
+            }
         }
     }
 

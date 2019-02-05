@@ -1,6 +1,7 @@
 package fi.valtteri.birdwatcher.ui.addentry
 
 import android.content.Context
+import android.os.Environment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MutableLiveData
@@ -18,6 +19,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelChildren
 import org.joda.time.DateTime
+import java.io.File
+import java.io.IOException
 import javax.inject.Inject
 
 class AddEntryViewModel @Inject constructor(
@@ -42,10 +45,14 @@ class AddEntryViewModel @Inject constructor(
     private val entryTimestamp: BehaviorSubject<DateTime> = BehaviorSubject.create()
     private val entrySpeciesName: BehaviorSubject<String> = BehaviorSubject.createDefault("")
     private val entryDescription: BehaviorSubject<String> = BehaviorSubject.createDefault("")
-    private val entryPicFileName: Observable<String> = entryTimestamp.map { "${it.millis}_bird.jpg" }
+    private val entryPicFileName: Observable<String> = entryTimestamp.map { "${it.millis}_bird" }
+
 
     init {
         val speciesDisposable = speciesRepository.getSpecies().subscribe { it -> speciesData.postValue(it) }
+        val fileDisposable = entryPicFileName.subscribe{fileName ->
+
+        }
 
         compositeDisposable.addAll(speciesDisposable)
     }
@@ -60,8 +67,7 @@ class AddEntryViewModel @Inject constructor(
 
     fun getEntrySpeciesName() = LiveDataReactiveStreams.fromPublisher(entrySpeciesName.toFlowable(BackpressureStrategy.LATEST))
     fun getEntryDescription() = LiveDataReactiveStreams.fromPublisher(entryDescription.toFlowable(BackpressureStrategy.LATEST))
-
-
+    fun getEntryPicFileName() = LiveDataReactiveStreams.fromPublisher(entryPicFileName.toFlowable(BackpressureStrategy.LATEST))
 
     fun initializeNewEntry(){
         entryTimestamp.onNext(DateTime.now())
