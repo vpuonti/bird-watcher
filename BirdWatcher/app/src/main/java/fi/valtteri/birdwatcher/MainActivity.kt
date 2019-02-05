@@ -1,9 +1,11 @@
 package fi.valtteri.birdwatcher
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -33,7 +35,7 @@ class MainActivity : AppCompatActivity(),
 
 
         bottom_navigation.setOnNavigationItemSelectedListener(this)
-        camera_fab.setOnClickListener(this::handleFabClick)
+        fab_observation.setOnClickListener(this::handleFabClick)
 
 
     }
@@ -64,9 +66,19 @@ class MainActivity : AppCompatActivity(),
 
     private fun handleFabClick(view: View) {
         val intent = Intent(this, AddEntryActivity::class.java)
-        startActivity(intent)
+        progress_horizontal.visibility = View.VISIBLE
+        startActivityForResult(intent, START_OBSERVATION)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        progress_horizontal.visibility = View.GONE
+
+    }
+
+
+    companion object {
+        private const val START_OBSERVATION = 11212
+    }
 
 
 

@@ -3,6 +3,7 @@ package fi.valtteri.birdwatcher.data
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 import fi.valtteri.birdwatcher.data.entities.Species
 import io.reactivex.Flowable
 
@@ -17,5 +18,11 @@ interface SpeciesDao {
 
     @Query("DELETE FROM species")
     fun deleteAll()
+
+    @Transaction
+    fun updateData(newData: List<Species>) {
+        deleteAll()
+        insert(*newData.toTypedArray())
+    }
 
 }

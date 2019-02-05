@@ -8,6 +8,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.location.LocationProvider
 import android.os.Bundle
+import android.os.Looper
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -15,16 +16,13 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import com.google.android.gms.location.LocationResult
+import com.google.android.gms.tasks.Tasks
 import io.reactivex.subjects.BehaviorSubject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import timber.log.Timber
 import javax.inject.Inject
 
-class LocationService @Inject constructor(
-    private val context: Context) : LifecycleObserver, LocationCallback() {
+class LocationService @Inject constructor(context: Context) : LifecycleObserver, LocationCallback() {
 
     private val job = Job()
     private val scope = CoroutineScope(Dispatchers.IO + job)
@@ -37,7 +35,9 @@ class LocationService @Inject constructor(
     private fun start() {
         scope.launch {
             try {
-                fusedLocationProvider.lastLocation.result?.let { locationData.postValue(it) }
+                val lastLocation = Tasks.await(fusedLocationProvider.lastLocation)
+                Timber.d("Initializing location data")
+                locationData.postValue(lastLocation)
 
             } catch (e: SecurityException) {
                 Timber.e("Error getting last location: $e")
@@ -45,9 +45,9 @@ class LocationService @Inject constructor(
         }
         val locationRequest = LocationRequest.create()
             .setPriority(PRIORITY_HIGH_ACCURACY)
-            .setInterval(1000)
+            .setInterval(5000)
         try {
-            fusedLocationProvider.requestLocationUpdates(locationRequest, this)
+            fusedLocationProvider.requestLocationUpdates(locationRequest, this, Looper.myLooper())
             Timber.d("Started requesting location updates")
 
         } catch (e: SecurityException) {
@@ -57,6 +57,8 @@ class LocationService @Inject constructor(
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     private fun stop() {
+        job.cancelChildren()
+        fusedLocationProvider.removeLocationUpdates(this)
 
         Timber.d("Stopped location service")
     }
@@ -65,40 +67,9 @@ class LocationService @Inject constructor(
 
 
     override fun onLocationResult(locationResult: LocationResult?) {
-
+        Timber.d("onLocationResult")
+        locationResult?.lastLocation?.let { locationData.value = it }
     }
 
-//    override fun onLocationChanged(location: Location?) {
-//        Timber.d("Location changed")
-//        location?.let { locationData.value = it }
-//    }
-//
-//    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-//        Timber.d("Status changed")
-//    }
-//
-//    override fun onProviderEnabled(provider: String?) {
-//        provider?.let {
-//            when(it) {
-//                LocationManager.GPS_PROVIDER -> {
-//                    Timber.d("Provider ${LocationManager.GPS_PROVIDER} enabled")
-//                    gpsEnabled.value = true
-//                }
-//            }
-//        }
-//
-//    }
-//
-//    override fun onProviderDisabled(provider: String?) {
-//        Timber.d("Provider $provider disabled")
-//        provider?.let {
-//            when(it) {
-//                LocationManager.GPS_PROVIDER -> {
-//                    Timber.d("Provider ${LocationManager.GPS_PROVIDER} disabled")
-//                    gpsEnabled.value = true
-//                }
-//            }
-//        }
-//    }
 
 }

@@ -60,6 +60,9 @@ class AddEntryActivity : AppCompatActivity() {
     lateinit var raritySpinner: Spinner
     lateinit var rarityAdapter: ArrayAdapter<String>
 
+    lateinit var permissionsRationaleDialog: AlertDialog
+    lateinit var speciesSelectionDialog: AlertDialog
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -70,11 +73,8 @@ class AddEntryActivity : AppCompatActivity() {
         collapsing_toolbar.title = resources.getText(R.string.new_observation)
         camera_fab.setOnClickListener(this::handleFabClick)
 
-        Timber.d("ONCREATE")
-        // setup species adapter
-        speciesAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, mutableListOf())
-        // setup species input
-        speciesInput = species_input
+        //init dialogs
+        initializeDialogs()
         addSpeciesBtn = add_species_btn
         addSpeciesBtn.setOnClickListener(this::handleSpeciesSelectionClick)
 
@@ -152,18 +152,7 @@ class AddEntryActivity : AppCompatActivity() {
                     this@AddEntryActivity, Manifest.permission.ACCESS_FINE_LOCATION)) {
                 //show rationale to user
                 Timber.d("Showing rationale to user")
-                AlertDialog.Builder(this@AddEntryActivity)
-                    .setMessage(R.string.location_rationale)
-                    .setPositiveButton("Yes") { dialog, id ->
-                        requestLocationPermission()
-                    }
-                    .setNeutralButton("Cancel") {dialog, id ->
-                        finish()
-                    }
-                    .setCancelable(true)
-                    .setOnCancelListener { finish() }
-                    .create()
-                    .show()
+                permissionsRationaleDialog.show()
 
             } else {
                 requestLocationPermission()
@@ -182,6 +171,71 @@ class AddEntryActivity : AppCompatActivity() {
             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
             AddEntryActivity.FINE_LOCATION_REQUEST_CODE
         )
+
+    }
+
+    private fun initializeDialogs() {
+        //permissions rationale dialog
+        permissionsRationaleDialog = AlertDialog.Builder(this@AddEntryActivity)
+            .setMessage(R.string.location_rationale)
+            .setPositiveButton("Yes") { dialog, id ->
+                requestLocationPermission()
+            }
+            .setNeutralButton("Cancel") {dialog, id ->
+                finish()
+            }
+            .setCancelable(true)
+            .setOnCancelListener { finish() }
+            .create()
+
+        //species selection dialog
+
+        // setup species adapter
+        speciesAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, mutableListOf())
+        // setup species input
+        speciesInput = species_input
+
+        val builder = AlertDialog.Builder(this@AddEntryActivity)
+
+        //build custom layout
+        val alertView = LayoutInflater.from(this@AddEntryActivity).inflate(R.layout.species_selector_layout, null)
+        val listView = alertView.species_list
+        listView.adapter = speciesAdapter
+        listView.isTextFilterEnabled = true
+        listView.choiceMode = AbsListView.CHOICE_MODE_SINGLE
+        listView.onItemClickListener = object : AdapterView.OnItemClickListener {
+            override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                speciesSelectionDialog.dismiss()
+                speciesAdapter.getItem(position)?.let {
+                    viewModel.setSpecies(it)
+
+                }
+            }
+
+        }
+
+        val searchView = alertView.species_search
+        searchView.isIconified = false
+        searchView.isSubmitButtonEnabled = false
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    if(newText.isBlank()) {
+                        listView.clearTextFilter()
+                    } else {
+                        listView.setFilterText(it)
+                    }
+                }
+                return true
+            }
+
+        })
+        builder.setView(alertView)
+        speciesSelectionDialog = builder.create()
 
     }
 
@@ -205,53 +259,7 @@ class AddEntryActivity : AppCompatActivity() {
     }
 
     private fun handleSpeciesSelectionClick(view: View) {
-        val builder = AlertDialog.Builder(this@AddEntryActivity)
-
-        //build custom layout
-        val alertView = LayoutInflater.from(this@AddEntryActivity).inflate(R.layout.species_selector_layout, null)
-        val listView = alertView.species_list
-        listView.adapter = speciesAdapter
-        listView.isTextFilterEnabled = true
-        listView.choiceMode = AbsListView.CHOICE_MODE_SINGLE
-
-
-
-        val searchView = alertView.species_search
-        searchView.isIconified = false
-        searchView.isSubmitButtonEnabled = false
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let {
-                    if(newText.isBlank()) {
-                        listView.clearTextFilter()
-                    } else {
-                        listView.setFilterText(it)
-                    }
-                }
-                return true
-            }
-
-        })
-        builder.setView(alertView)
-        val dialog = builder.create()
-
-
-        listView.onItemClickListener = object : AdapterView.OnItemClickListener {
-            override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                dialog.dismiss()
-                speciesAdapter.getItem(position)?.let {
-                    viewModel.setSpecies(it)
-
-                }
-            }
-
-        }
-        dialog.show()
-
+        speciesSelectionDialog.show()
 
     }
 
@@ -289,6 +297,18 @@ class AddEntryActivity : AppCompatActivity() {
         }
     }
 
+
+    override fun onPause() {
+        super.onPause()
+        speciesSelectionDialog.dismiss()
+        permissionsRationaleDialog.dismiss()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        speciesSelectionDialog.dismiss()
+        permissionsRationaleDialog.dismiss()
+    }
 
     companion object {
         private const val PICTURE_REQUEST_CODE = 1019

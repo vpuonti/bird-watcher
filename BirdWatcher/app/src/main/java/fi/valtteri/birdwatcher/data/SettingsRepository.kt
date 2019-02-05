@@ -25,11 +25,13 @@ class SettingsRepository @Inject constructor(
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
         val selectedLang = sharedPreferences.getString(SPECIES_LANGUAGE_PREFERENCE, null)
         Timber.d("INIT SETTINGS REPO. Default lang pref: $selectedLang")
+        selectedLang?.let {
+            currentlySelectedLanguagePreference.onNext(it)
+        }
         //set initial value if none set
         if(selectedLang == null) {
             val defaultValue = context.resources.getStringArray(R.array.species_language_choices)[0]
-            sharedPreferences.edit().putString(SPECIES_LANGUAGE_PREFERENCE, defaultValue)
-                .apply()
+            sharedPreferences.edit().putString(SPECIES_LANGUAGE_PREFERENCE, defaultValue).apply()
         }
     }
 
@@ -43,16 +45,19 @@ class SettingsRepository @Inject constructor(
         sharedPreferences.edit().putString(SPECIES_LANGUAGE_PREFERENCE, preference).apply()
     }
 
-    fun getLanguagePref() : Flowable<String> = currentlySelectedLanguagePreference.toFlowable(BackpressureStrategy.LATEST)
+    fun getLanguagePref() : Flowable<String> = currentlySelectedLanguagePreference.toFlowable(BackpressureStrategy.BUFFER)
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        Timber.d("Shared prefs changed")
+        Timber.d("Shared prefs changed. Key: $key")
         when (key!!) {
             SPECIES_LANGUAGE_PREFERENCE -> {
                 Timber.d("$SPECIES_LANGUAGE_PREFERENCE changed!")
                 sharedPreferences?.let { sp ->
                     val str = sp.getString(SPECIES_LANGUAGE_PREFERENCE, null)
-                    str?.let { currentlySelectedLanguagePreference.onNext(it) }
+                    str?.let {
+                       Timber.d("Setting $it to behaviorsubject")
+                        currentlySelectedLanguagePreference.onNext(it)
+                    }
                 }
             }
         }
