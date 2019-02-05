@@ -24,5 +24,6 @@
     <string name="rarity">Rarity</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
+    <string name="save">Save</string>
 
 </resources>

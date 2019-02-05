@@ -50,18 +50,14 @@ class AddEntryViewModel @Inject constructor(
     private val entryPicFileName: Observable<String> = entryTimestamp.map { "${it.millis}_bird" }
     private val entryPicUri: BehaviorSubject<Uri> = BehaviorSubject.create()
 
-    private val nameGucci = entrySpeciesName.map { it.isNotEmpty() }.toFlowable(BackpressureStrategy.LATEST).toObservable()
-    private val descGucci = entryDescription.map { it.isNotEmpty() }.toFlowable(BackpressureStrategy.LATEST).toObservable()
 
-    private val allGucci = BehaviorSubject.combineLatest<String, String, Boolean>(
+    private val saveAllowed = Observable.combineLatest<String, String, Boolean>(
         entryDescription, entrySpeciesName,
             BiFunction { desc: String, name: String ->
                 return@BiFunction (desc.isNotEmpty() && name.isNotEmpty())
             }
         )
-        .subscribe {
-            Timber.d("All gucci: $it")
-        }
+        .doOnNext { Timber.d("All gucci: $it") }
 
     init {
         val speciesDisposable = speciesRepository.getSpecies().subscribe { it -> speciesData.postValue(it) }
@@ -81,6 +77,7 @@ class AddEntryViewModel @Inject constructor(
     fun getEntryDescription() = LiveDataReactiveStreams.fromPublisher(entryDescription.toFlowable(BackpressureStrategy.LATEST))
     fun getEntryPicFileName() = LiveDataReactiveStreams.fromPublisher(entryPicFileName.toFlowable(BackpressureStrategy.LATEST))
     fun getEntryPicUri() = LiveDataReactiveStreams.fromPublisher(entryPicUri.toFlowable(BackpressureStrategy.LATEST))
+    fun isSaveAllowed() = LiveDataReactiveStreams.fromPublisher(saveAllowed.toFlowable(BackpressureStrategy.LATEST))
 
     fun initializeNewEntry(){
         entryTimestamp.onNext(DateTime.now())

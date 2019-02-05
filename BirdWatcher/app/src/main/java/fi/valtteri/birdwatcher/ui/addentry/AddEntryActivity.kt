@@ -12,6 +12,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -73,6 +74,9 @@ class AddEntryActivity : AppCompatActivity() {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_entry)
+        // set keyboard toggle
+        //.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         collapsing_toolbar.title = resources.getText(R.string.new_observation)
@@ -147,6 +151,10 @@ class AddEntryActivity : AppCompatActivity() {
         locationService.getLocation().observe(this, Observer { location ->
             latitude_input.setText(location.latitude.toString(), TextView.BufferType.NORMAL)
             longitude_input.setText(location.longitude.toString(), TextView.BufferType.EDITABLE)
+        })
+
+        viewModel.isSaveAllowed().observe(this, Observer { saveAllowed ->
+            save_button.isEnabled = saveAllowed
         })
 
         askForLocationPermissions()
