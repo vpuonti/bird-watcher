@@ -36,6 +36,9 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
 
+    //play services
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+
     // joda time
     implementation 'joda-time:joda-time:2.10.1'
 
@@ -46,7 +49,7 @@ dependencies {
     // Room db
     implementation 'androidx.room:room-runtime:2.1.0-alpha04'
     implementation 'androidx.room:room-rxjava2:2.1.0-alpha04'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt 'androidx.room:room-compiler:2.1.0-alpha04'
 
     // Kotlin coroutines
