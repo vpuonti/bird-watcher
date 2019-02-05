@@ -5,6 +5,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+
     <androidx.appcompat.widget.SearchView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -12,12 +13,16 @@
             android:id="@+id/species_search"
     />
 
+
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:id="@+id/species_list"
+        android:layout_weight="1"
     >
 
     </ListView>
+
+
 
 </LinearLayout>

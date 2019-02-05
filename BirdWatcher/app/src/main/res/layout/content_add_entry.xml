@@ -31,8 +31,50 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/latitude"
+                    app:errorEnabled="true"
+            >
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/latitude_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:enabled="false"
+                />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/longitude"
+                    app:errorEnabled="true"
+            >
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/longitude_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:enabled="false"
+                />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -42,6 +84,8 @@
                 android:layout_weight="2"
                 android:layout_height="wrap_content"
                 android:hint="@string/species"
+                app:errorEnabled="true"
+                android:id="@+id/species_input_container"
         >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -63,29 +107,38 @@
 
     </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-            android:hint="@string/rarity"
         >
+
+            <TextView
+                    android:id="@+id/rarity_spinner_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rarity"
+            />
             <Spinner
+                    android:layout_below="@id/rarity_spinner_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/rarity_spinner"
             />
 
 
-        </com.google.android.material.textfield.TextInputLayout>
+        </RelativeLayout>
 
         <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/input_observation_description"
+                android:id="@+id/description_input_container"
+                android:hint="@string/description"
+                app:errorEnabled="true"
         >
             <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/description_input"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/description"
             />
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -9,6 +9,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
@@ -16,10 +18,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputLayout
 import dagger.android.AndroidInjection
 import fi.valtteri.birdwatcher.R
 import fi.valtteri.birdwatcher.data.entities.ObservationRarity
@@ -50,6 +54,9 @@ class AddEntryActivity : AppCompatActivity() {
     lateinit var speciesInput: EditText
     lateinit var addSpeciesBtn: MaterialButton
 
+    lateinit var descriptionInput: EditText
+    lateinit var descriptionInputLayout: TextInputLayout
+
     lateinit var raritySpinner: Spinner
     lateinit var rarityAdapter: ArrayAdapter<String>
 
@@ -63,7 +70,9 @@ class AddEntryActivity : AppCompatActivity() {
         collapsing_toolbar.title = resources.getText(R.string.new_observation)
         camera_fab.setOnClickListener(this::handleFabClick)
 
-        speciesAdapter = ArrayAdapter(this, android.R.layout.select_dialog_item, mutableListOf())
+        Timber.d("ONCREATE")
+        // setup species adapter
+        speciesAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, mutableListOf())
         // setup species input
         speciesInput = species_input
         addSpeciesBtn = add_species_btn
@@ -71,7 +80,7 @@ class AddEntryActivity : AppCompatActivity() {
 
         //setup rarity spinner
         raritySpinner = rarity_spinner
-        rarityAdapter = ArrayAdapter(this, android.R.layout.select_dialog_item, ObservationRarity.values().map { it.toString() })
+        rarityAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, ObservationRarity.values().map { it.toString() })
         raritySpinner.adapter = rarityAdapter
         raritySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -79,20 +88,56 @@ class AddEntryActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 viewModel.setEntryRarity(ObservationRarity.values()[position])
             }
-
         }
 
+        //setup description box
+        descriptionInput = description_input
+        descriptionInputLayout = description_input_container
+
+
+        //get viewmodel
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AddEntryViewModel::class.java)
-        val timestamp = DateTime.now()
-        viewModel.initializeNewEntry()
-        timestamp_input.setText(timestamp.toString(DateTimeFormat.mediumDateTime()), TextView.BufferType.NORMAL)
+        if (savedInstanceState == null) {
+            viewModel.initializeNewEntry()
+
+        }
 
         viewModel.getSpeciesNames().observe(this, Observer {names ->
             speciesAdapter.clear()
             speciesAdapter.addAll(names)
         })
 
+        viewModel.getEntryTimestamp().observe(this, Observer { timestamp ->
+            timestamp_input.setText(timestamp.toString(DateTimeFormat.mediumDateTime()), TextView.BufferType.NORMAL)
+        })
+
+        viewModel.getEntrySpeciesName().observe(this, Observer { name ->
+            speciesInput.setText(name, TextView.BufferType.NORMAL)
+            if(name.isBlank()) {
+                species_input_container.error = "Add species"
+            } else {
+                species_input_container.error = null
+            }
+        })
+
+        viewModel.getEntryDescription().observe(this, Observer { description ->
+            Timber.d("Desc: $description")
+            if (description.isBlank()) {
+                descriptionInputLayout.error = "Add description"
+            } else {
+                descriptionInputLayout.error = null
+            }
+        })
+
+        // observe location
+        locationService.getLocation().observe(this, Observer { location ->
+            latitude_input.setText(location.latitude.toString(), TextView.BufferType.NORMAL)
+            longitude_input.setText(location.longitude.toString(), TextView.BufferType.EDITABLE)
+        })
+
         askForLocationPermissions()
+        descriptionInput.addTextChangedListener { it?.let { editable ->  viewModel.setEntryDescription(editable.toString()) } }
+
 
     }
 
@@ -112,9 +157,11 @@ class AddEntryActivity : AppCompatActivity() {
                     .setPositiveButton("Yes") { dialog, id ->
                         requestLocationPermission()
                     }
-                    .setNegativeButton("No") { dialog, id ->
-                        Toast.makeText(this@AddEntryActivity, "Location won't be used", Toast.LENGTH_LONG).show()
+                    .setNeutralButton("Cancel") {dialog, id ->
+                        finish()
                     }
+                    .setCancelable(true)
+                    .setOnCancelListener { finish() }
                     .create()
                     .show()
 
@@ -123,6 +170,7 @@ class AddEntryActivity : AppCompatActivity() {
             }
         } else {
             //we have permissions
+            Timber.d("We have permissions")
             startLocationService()
 
         }
@@ -143,8 +191,17 @@ class AddEntryActivity : AppCompatActivity() {
 
 
     private fun handleFabClick(view: View) {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(intent, PICTURE_REQUEST_CODE)
+       dispatchTakePictureIntent()
+    }
+
+
+    private fun dispatchTakePictureIntent() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(packageManager)?.also {
+                startActivityForResult(takePictureIntent, PICTURE_REQUEST_CODE)
+            }
+        }
+
     }
 
     private fun handleSpeciesSelectionClick(view: View) {
@@ -182,11 +239,12 @@ class AddEntryActivity : AppCompatActivity() {
         builder.setView(alertView)
         val dialog = builder.create()
 
+
         listView.onItemClickListener = object : AdapterView.OnItemClickListener {
             override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 dialog.dismiss()
                 speciesAdapter.getItem(position)?.let {
-                    onSpeciesSelected(it)
+                    viewModel.setSpecies(it)
 
                 }
             }
@@ -197,9 +255,6 @@ class AddEntryActivity : AppCompatActivity() {
 
     }
 
-    private fun onSpeciesSelected(speciesName: String) {
-        speciesInput.setText(speciesName, TextView.BufferType.NORMAL)
-    }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -207,7 +262,7 @@ class AddEntryActivity : AppCompatActivity() {
         if(requestCode == PICTURE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val bmp = data?.extras?.get("data") as Bitmap
             val stream = ByteArrayOutputStream()
-            bmp.compress(Bitmap.CompressFormat.PNG, 50, stream)
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream)
             val byteArray = stream.toByteArray()
             val bitmap = BitmapFactory.decodeByteArray(
                 byteArray, 0,
@@ -228,10 +283,12 @@ class AddEntryActivity : AppCompatActivity() {
 
                 } else {
                     Timber.d("User denied location permission.")
+                    finish()
                 }
             }
         }
     }
+
 
     companion object {
         private const val PICTURE_REQUEST_CODE = 1019

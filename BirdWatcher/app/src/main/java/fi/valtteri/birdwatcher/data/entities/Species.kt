@@ -12,7 +12,7 @@ data class Species (
     @Json(name = "speciesAbbr")
     val abbreviation: String,
     @Json(name = "speciesSCI")
-    val scienticName: String,
+    val scientificName: String,
     @Json(name = "speciesFI")
     val finnishName: String,
     @Json(name = "speciesSV")

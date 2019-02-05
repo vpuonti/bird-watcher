@@ -1,21 +1,21 @@
 package fi.valtteri.birdwatcher.ui.addentry
 
 import android.content.Context
-import android.widget.GridLayout
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import fi.valtteri.birdwatcher.R
 import fi.valtteri.birdwatcher.data.SettingsRepository
 import fi.valtteri.birdwatcher.data.SpeciesRepository
-import fi.valtteri.birdwatcher.data.entities.Observation
 import fi.valtteri.birdwatcher.data.entities.ObservationRarity
 import fi.valtteri.birdwatcher.data.entities.Species
+import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
-import kotlinx.android.synthetic.main.activity_main.*
+import io.reactivex.Observable
+import io.reactivex.subjects.BehaviorSubject
 import kotlinx.coroutines.*
 import org.joda.time.DateTime
-import timber.log.Timber
 import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
@@ -33,9 +33,14 @@ class AddEntryViewModel @Inject constructor(
 
 
     // data to make observation
-    private var entryTimestamp: DateTime? = null
-    private var entryPicFileName: String? = null
+    //private var entryTimestamp: DateTime? = null
+    //private var entryPicFileName: String? = null
     private var rarity: ObservationRarity? = null
+
+    private val entryTimestamp: BehaviorSubject<DateTime> = BehaviorSubject.create()
+    private val entrySpeciesName: BehaviorSubject<String> = BehaviorSubject.createDefault("")
+    private val entryDescription: BehaviorSubject<String> = BehaviorSubject.createDefault("")
+    private val entryPicFileName: Observable<String> = entryTimestamp.map { "${it.millis}_bird.jpg" }
 
     fun getSpecies(): LiveData<List<Species>> {
         scope.launch(Dispatchers.IO) {
@@ -56,6 +61,15 @@ class AddEntryViewModel @Inject constructor(
         return speciesNames
     }
 
+    fun getEntryTimestamp() = LiveDataReactiveStreams.fromPublisher(entryTimestamp.toFlowable(BackpressureStrategy.LATEST))
+
+    fun getEntrySpeciesName() = LiveDataReactiveStreams.fromPublisher(entrySpeciesName.toFlowable(BackpressureStrategy.LATEST))
+    fun getEntryDescription() = LiveDataReactiveStreams.fromPublisher(entryDescription.toFlowable(BackpressureStrategy.LATEST))
+
+    /**
+     * If language: scientific -> map List<Species> to List<String> where String = Species.scientificName
+     * Same for all configured languages. (Configured in res/values/strings as <string-array>)
+     */
     private fun mapSpeciesToNames(language: String): Flowable<List<String>> {
         val languages = context.resources.getStringArray(R.array.species_language_choices)
         return speciesRepository.getSpecies()
@@ -63,7 +77,7 @@ class AddEntryViewModel @Inject constructor(
                 return@map it.map { species ->
                     when (languages.indexOf(language)) {
                         0 -> {
-                            species.scienticName
+                            species.scientificName
                         }
                         1 -> {
                             species.finnishName
@@ -84,13 +98,20 @@ class AddEntryViewModel @Inject constructor(
 
 
     fun initializeNewEntry(){
-        entryTimestamp = DateTime.now()
-        entryPicFileName = "${entryTimestamp?.millis}_bird.jpg"
+        entryTimestamp.onNext(DateTime.now())
 
+    }
+
+    fun setSpecies(speciesName: String) {
+        entrySpeciesName.onNext(speciesName)
     }
 
     fun setEntryRarity(rarity: ObservationRarity) {
         this.rarity = rarity
+    }
+
+    fun setEntryDescription(desc: String) {
+        entryDescription.onNext(desc)
     }
 
     override fun onCleared() {

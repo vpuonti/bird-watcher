@@ -8,48 +8,71 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.location.LocationProvider
 import android.os.Bundle
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.*
 import timber.log.Timber
 import javax.inject.Inject
 
 class LocationService @Inject constructor(
     private val context: Context) : LifecycleObserver, LocationListener {
-    private val mLocationData: MutableLiveData<Location> = MutableLiveData()
 
+    private val locationData: MutableLiveData<Location> = MutableLiveData()
     private val locationManager: LocationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
+    private val gpsEnabled: MutableLiveData<Boolean> = MutableLiveData()
+
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun start() {
-        Timber.d("Started location service")
-        if(ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+    private fun start() {
+        try {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
+            Timber.d("Started requesting location updates")
+
+        } catch (e: SecurityException) {
+            Timber.e("No permissions! $e")
         }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    fun stop() {
+    private fun stop() {
+        locationManager.removeUpdates(this)
         Timber.d("Stopped location service")
     }
 
+    fun getLocation(): LiveData<Location> = locationData
+
+    fun gpsEnabled(): Boolean = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+
     override fun onLocationChanged(location: Location?) {
-        location?.let { mLocationData.value = it }
+        Timber.d("Location changed")
+        location?.let { locationData.value = it }
     }
 
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-
+        Timber.d("Status changed")
     }
 
     override fun onProviderEnabled(provider: String?) {
+        provider?.let {
+            when(it) {
+                LocationManager.GPS_PROVIDER -> {
+                    Timber.d("Provider ${LocationManager.GPS_PROVIDER} enabled")
+                    gpsEnabled.value = true
+                }
+            }
+        }
 
     }
 
     override fun onProviderDisabled(provider: String?) {
-
+        Timber.d("Provider $provider disabled")
+        provider?.let {
+            when(it) {
+                LocationManager.GPS_PROVIDER -> {
+                    Timber.d("Provider ${LocationManager.GPS_PROVIDER} disabled")
+                    gpsEnabled.value = true
+                }
+            }
+        }
     }
 
 }
