@@ -83,6 +83,8 @@ class AddEntryActivity : AppCompatActivity(), LocationService.LocationServiceNot
         collapsing_toolbar.title = resources.getText(R.string.new_observation)
         camera_fab.setOnClickListener(this::handleFabClick)
 
+        locationService.setLocationNotAvailableOnStartUpCallback(this)
+
         //init dialogs
         initializeDialogs()
 

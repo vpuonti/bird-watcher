@@ -17,14 +17,12 @@ import kotlinx.coroutines.*
 import timber.log.Timber
 import javax.inject.Inject
 
-class LocationService @Inject constructor(
-    context: Context,
-    private val locationServiceNotAvailableOnStartUpCallback: LocationServiceNotAvailableOnStartUpCallback
-                                          ) : LifecycleObserver, LocationCallback() {
+class LocationService @Inject constructor(context: Context) : LifecycleObserver, LocationCallback() {
     private val job = Job()
 
     private val scope = CoroutineScope(Dispatchers.IO + job)
     private val locationManager: LocationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    private var noGpsCallback: LocationServiceNotAvailableOnStartUpCallback? = null
 
     //private val locationData: MutableLiveData<Location?> = MutableLiveData()
     private val fusedLocationProvider = FusedLocationProviderClient(context)
@@ -32,19 +30,22 @@ class LocationService @Inject constructor(
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     private fun start() {
-        scope.launch {
-            try {
-                val locationAvailable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-                if(!locationAvailable) {
-                    locationServiceNotAvailableOnStartUpCallback.handleLocationNotAvailableOnStartUp()
-                }
-                val lastLocation = Tasks.await(fusedLocationProvider.lastLocation)
-                Timber.d("Initializing location data")
-                lastLocation?.also { locationData.onNext(it) }
+        val locationAvailable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        if(!locationAvailable) {
+            noGpsCallback?.handleLocationNotAvailableOnStartUp()
+        } else {
+            //get last location so we don't have to wait for LocationCallback to start doing work
+            scope.launch {
+                try {
+                    val lastLocation = Tasks.await(fusedLocationProvider.lastLocation)
+                    Timber.d("Initializing location data")
+                    lastLocation?.also { locationData.onNext(it) }
 
-            } catch (e: SecurityException) {
-                Timber.e("Error getting last location: $e")
+                } catch (e: SecurityException) {
+                    Timber.e("Error getting last location: $e")
+                }
             }
+
         }
         val locationRequest = LocationRequest.create()
             .setPriority(PRIORITY_HIGH_ACCURACY)
@@ -69,6 +70,12 @@ class LocationService @Inject constructor(
 
     fun getLocation(): LiveData<Location> = LiveDataReactiveStreams.fromPublisher(locationData.toFlowable(BackpressureStrategy.LATEST))
 
+
+    fun setLocationNotAvailableOnStartUpCallback(
+        callback: LocationServiceNotAvailableOnStartUpCallback
+    ) {
+        noGpsCallback = callback
+    }
 
 
 
