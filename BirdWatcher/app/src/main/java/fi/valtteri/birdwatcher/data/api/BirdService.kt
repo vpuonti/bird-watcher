@@ -1,4 +1,4 @@
-package fi.valtteri.birdwatcher.data
+package fi.valtteri.birdwatcher.data.api
 
 import fi.valtteri.birdwatcher.data.entities.Species
 import io.reactivex.Observable

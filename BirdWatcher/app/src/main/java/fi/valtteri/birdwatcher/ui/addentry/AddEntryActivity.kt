@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -22,11 +23,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import dagger.android.AndroidInjection
 import fi.valtteri.birdwatcher.R
 import fi.valtteri.birdwatcher.data.entities.ObservationRarity
 import fi.valtteri.birdwatcher.location.LocationService
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_add_entry.*
 import kotlinx.android.synthetic.main.content_add_entry.*
 import kotlinx.android.synthetic.main.species_selector_layout.view.*
@@ -37,7 +40,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 
-class AddEntryActivity : AppCompatActivity(), LocationService.LocationServiceNotAvailableOnStartUpCallback {
+class AddEntryActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -67,6 +70,10 @@ class AddEntryActivity : AppCompatActivity(), LocationService.LocationServiceNot
 
     lateinit var saveButton: MaterialButton
 
+    lateinit var locationProgressBar: ProgressBar
+
+    private val compositeDisposable = CompositeDisposable()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,10 +90,10 @@ class AddEntryActivity : AppCompatActivity(), LocationService.LocationServiceNot
         collapsing_toolbar.title = resources.getText(R.string.new_observation)
         camera_fab.setOnClickListener(this::handleFabClick)
 
-        locationService.setLocationNotAvailableOnStartUpCallback(this)
-
         //init dialogs
         initializeDialogs()
+
+        locationProgressBar = progress_horizontal
 
         addSpeciesBtn = add_species_btn
         addSpeciesBtn.setOnClickListener(this::handleSpeciesSelectionClick)
@@ -155,14 +162,17 @@ class AddEntryActivity : AppCompatActivity(), LocationService.LocationServiceNot
         })
 
         // observe location
-        locationService.getLocation().observe(this, Observer { it?.let { location ->
+        checkLocationLoadingStatus()
+        locationService.getLocation().observe(this, Observer { location ->
             val lat = location.latitude
             val lng = location.longitude
             latitude_input.setText(lat.toString(), TextView.BufferType.NORMAL)
             longitude_input.setText(lng.toString(), TextView.BufferType.EDITABLE)
             viewModel.setEntryLatLng(lat, lng)
 
-        }})
+        })
+
+
 
         viewModel.isSaveAllowed().observe(this, Observer { saveAllowed ->
             saveButton.isEnabled = saveAllowed
@@ -172,6 +182,28 @@ class AddEntryActivity : AppCompatActivity(), LocationService.LocationServiceNot
         descriptionInput.addTextChangedListener { it?.let { editable ->  viewModel.setEntryDescription(editable.toString()) } }
 
 
+    }
+
+    private fun checkLocationLoadingStatus() {
+        // get location loading status
+        val disposable = locationService.getLocationLoadingStatus()
+            .doOnSubscribe {
+                locationProgressBar.visibility = View.VISIBLE
+            }
+            .subscribe(
+                {
+                    Snackbar.make(activity_container, "Location loaded!", Snackbar.LENGTH_LONG)
+                        .show()
+
+                    locationProgressBar.visibility = View.GONE
+                },
+                {
+                    locationProgressBar.visibility = View.GONE
+                    Snackbar.make(activity_container, "${it.message}", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Retry") { checkLocationLoadingStatus() }
+                        .show()
+                })
+        compositeDisposable.add(disposable)
     }
 
 
@@ -284,9 +316,7 @@ class AddEntryActivity : AppCompatActivity(), LocationService.LocationServiceNot
     }
 
     private fun handleSaveClick(view: View) {
-        viewModel.isSaveAllowed().observe(this, Observer {
-            Timber.d("Saving")
-        })
+        viewModel.saveObservation()
     }
 
 
@@ -368,21 +398,20 @@ class AddEntryActivity : AppCompatActivity(), LocationService.LocationServiceNot
         }
     }
 
-    override fun handleLocationNotAvailableOnStartUp() {
-        Toast.makeText(this, "LOCATION NOT AVAILABLE!!!!", Toast.LENGTH_LONG).show()
-    }
 
 
     override fun onPause() {
         super.onPause()
         speciesSelectionDialog.dismiss()
         permissionsRationaleDialog.dismiss()
+        compositeDisposable.dispose()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         speciesSelectionDialog.dismiss()
         permissionsRationaleDialog.dismiss()
+        compositeDisposable.dispose()
     }
 
     companion object {

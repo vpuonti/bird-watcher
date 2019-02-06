@@ -1,27 +1,21 @@
-package fi.valtteri.birdwatcher.data
+package fi.valtteri.birdwatcher.data.species
 
 import android.content.Context
 import android.content.SharedPreferences
 import fi.valtteri.birdwatcher.R
-import fi.valtteri.birdwatcher.data.entities.Observation
+import fi.valtteri.birdwatcher.data.api.BirdService
 import fi.valtteri.birdwatcher.data.entities.Species
+import fi.valtteri.birdwatcher.data.settings.SettingsRepository
 import io.reactivex.Completable
-import io.reactivex.CompletableObserver
-import io.reactivex.CompletableOnSubscribe
 import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import io.reactivex.subjects.BehaviorSubject
 import org.joda.time.DateTime
 import org.joda.time.Hours
-import org.joda.time.Minutes
 import org.joda.time.Seconds
 import timber.log.Timber
 import java.lang.Exception
 import java.lang.IllegalArgumentException
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -32,8 +26,16 @@ class SpeciesRepository @Inject constructor(
     private val sharedPreferences: SharedPreferences,
     private val settingsRepository: SettingsRepository,
     private val context: Context
-) {
+) : SharedPreferences.OnSharedPreferenceChangeListener {
 
+
+    private val speciesLastUpdated: BehaviorSubject<DateTime> = BehaviorSubject.create()
+
+    init {
+        if(getLastUpdatedFromSharedPrefs() == null) {
+            fetchNewSpeciesDataAndUpdateDb()
+        }
+    }
 
     fun getSpecies() : Flowable<List<Species>> {
 
@@ -49,20 +51,17 @@ class SpeciesRepository @Inject constructor(
             Timber.d("Data is fresh")
         }
         return speciesDao.getSpecies()
+            .doOnNext {
+                Timber.d("Fetched ${it.size} species from DB")
+            }
             .filter { it.isNotEmpty() }
     }
 
-    /**
-     * If over 12 hours since last update (can be set to whatever)
-     */
     private fun isFresh(): Boolean {
-        var lastUpdated : DateTime? = null
-        try {
-            lastUpdated = DateTime.parse(sharedPreferences.getString(SPECIES_FETCHED, null))
-            val secondsBetween = Seconds.secondsBetween(lastUpdated ,DateTime.now()).seconds
-            Timber.d("Seconds between updates: $secondsBetween")
-        } catch (e: Exception) {}
-        return !(lastUpdated == null || Hours.hoursBetween(lastUpdated, DateTime.now()).hours > 12)
+        val updatedOn = getLastUpdatedFromSharedPrefs() ?: return false
+        val secondsBetween = Seconds.secondsBetween(updatedOn, DateTime.now()).seconds
+        Timber.d("Seconds between updates = $secondsBetween")
+        return (Hours.hoursBetween(updatedOn, DateTime.now()).hours < 12)
     }
 
     fun getSpeciesNames(): Flowable<List<String>> =
@@ -116,11 +115,28 @@ class SpeciesRepository @Inject constructor(
             }
     }
 
+    private fun getLastUpdatedFromSharedPrefs():  DateTime? {
+        val lastUpdate = sharedPreferences.getString(SPECIES_FETCHED, null)
+        if (lastUpdate == null) {
+            return null
+        } else {
+            return DateTime.parse(lastUpdate)
+        }
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+        when(key) {
+            SPECIES_FETCHED -> {
+                getLastUpdatedFromSharedPrefs()?.also { speciesLastUpdated.onNext(it) }
+            }
+        }
+    }
+
 
 
 
     companion object {
-        private const val SPECIES_FETCHED = "species_fetched"
+        const val SPECIES_FETCHED = "species_fetched"
     }
 
 }

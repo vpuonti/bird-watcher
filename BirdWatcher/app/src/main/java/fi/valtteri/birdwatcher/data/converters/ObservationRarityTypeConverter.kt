@@ -1,4 +1,4 @@
-package fi.valtteri.birdwatcher.data
+package fi.valtteri.birdwatcher.data.converters
 
 import androidx.room.TypeConverter
 import fi.valtteri.birdwatcher.data.entities.ObservationRarity

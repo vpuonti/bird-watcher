@@ -1,4 +1,4 @@
-package fi.valtteri.birdwatcher.data
+package fi.valtteri.birdwatcher.data.converters
 
 import androidx.room.TypeConverter
 import org.joda.time.DateTime

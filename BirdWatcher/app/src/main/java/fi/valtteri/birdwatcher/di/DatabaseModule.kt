@@ -25,6 +25,10 @@ class DatabaseModule {
     @Singleton
     fun speciesDao(db: AppDatabase) = db.speciesDao()
 
+    @Provides
+    @Singleton
+    fun observationDao(db: AppDatabase) = db.observationDao()
+
 
 
 

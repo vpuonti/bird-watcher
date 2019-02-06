@@ -1,12 +1,13 @@
-package fi.valtteri.birdwatcher.data
+package fi.valtteri.birdwatcher.data.settings
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.google.android.material.bottomappbar.BottomAppBar
 import fi.valtteri.birdwatcher.R
+import fi.valtteri.birdwatcher.data.species.SpeciesRepository
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.BehaviorSubject
+import org.joda.time.DateTime
 import timber.log.Timber
 import java.lang.IllegalArgumentException
 import javax.inject.Inject
@@ -24,10 +25,10 @@ class SettingsRepository @Inject constructor(
     init {
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
         val selectedLang = sharedPreferences.getString(SPECIES_LANGUAGE_PREFERENCE, null)
-        Timber.d("INIT SETTINGS REPO. Default lang pref: $selectedLang")
         selectedLang?.let {
             currentlySelectedLanguagePreference.onNext(it)
         }
+
         //set initial value if none set
         if(selectedLang == null) {
             val defaultValue = context.resources.getStringArray(R.array.species_language_choices)[0]
@@ -47,17 +48,15 @@ class SettingsRepository @Inject constructor(
 
     fun getLanguagePref() : Flowable<String> = currentlySelectedLanguagePreference.toFlowable(BackpressureStrategy.BUFFER)
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         Timber.d("Shared prefs changed. Key: $key")
-        when (key!!) {
+        when (key) {
             SPECIES_LANGUAGE_PREFERENCE -> {
                 Timber.d("$SPECIES_LANGUAGE_PREFERENCE changed!")
-                sharedPreferences?.let { sp ->
-                    val str = sp.getString(SPECIES_LANGUAGE_PREFERENCE, null)
-                    str?.let {
-                       Timber.d("Setting $it to behaviorsubject")
-                        currentlySelectedLanguagePreference.onNext(it)
-                    }
+                val str = sharedPreferences.getString(SPECIES_LANGUAGE_PREFERENCE, null)
+                str?.let {
+                    Timber.d("Setting $it to behaviorsubject")
+                    currentlySelectedLanguagePreference.onNext(it)
                 }
             }
         }

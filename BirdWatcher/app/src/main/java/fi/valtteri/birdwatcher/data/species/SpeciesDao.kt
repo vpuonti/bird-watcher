@@ -1,4 +1,4 @@
-package fi.valtteri.birdwatcher.data
+package fi.valtteri.birdwatcher.data.species
 
 import androidx.room.Dao
 import androidx.room.Insert

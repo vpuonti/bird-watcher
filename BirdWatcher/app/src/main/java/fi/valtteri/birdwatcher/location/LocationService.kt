@@ -12,40 +12,39 @@ import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.tasks.Tasks
 import io.reactivex.BackpressureStrategy
+import io.reactivex.Completable
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.coroutines.*
 import timber.log.Timber
+import java.lang.RuntimeException
 import javax.inject.Inject
 
 class LocationService @Inject constructor(context: Context) : LifecycleObserver, LocationCallback() {
     private val job = Job()
 
-    private val scope = CoroutineScope(Dispatchers.IO + job)
+    private val scope = CoroutineScope(Dispatchers.Main + job)
     private val locationManager: LocationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-    private var noGpsCallback: LocationServiceNotAvailableOnStartUpCallback? = null
 
     //private val locationData: MutableLiveData<Location?> = MutableLiveData()
     private val fusedLocationProvider = FusedLocationProviderClient(context)
+
     private val locationData: BehaviorSubject<Location> = BehaviorSubject.create()
+
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     private fun start() {
-        val locationAvailable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-        if(!locationAvailable) {
-            noGpsCallback?.handleLocationNotAvailableOnStartUp()
-        } else {
-            //get last location so we don't have to wait for LocationCallback to start doing work
-            scope.launch {
-                try {
-                    val lastLocation = Tasks.await(fusedLocationProvider.lastLocation)
-                    Timber.d("Initializing location data")
-                    lastLocation?.also { locationData.onNext(it) }
 
-                } catch (e: SecurityException) {
-                    Timber.e("Error getting last location: $e")
+        //get last location so we don't have to wait for LocationCallback to start doing work
+        scope.launch {
+             try {
+                val lastLocation: Location? = withContext(Dispatchers.IO) { Tasks.await(fusedLocationProvider.lastLocation) }
+                lastLocation?.also { location ->
+                    Timber.d("Initializing location data with Lat: ${location.latitude} Lng: ${location.longitude}")
+                    locationData.onNext(location)
                 }
+            } catch (e: SecurityException) {
+                Timber.e("Error getting last location: $e")
             }
-
         }
         val locationRequest = LocationRequest.create()
             .setPriority(PRIORITY_HIGH_ACCURACY)
@@ -59,7 +58,6 @@ class LocationService @Inject constructor(context: Context) : LifecycleObserver,
         }
     }
 
-
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     private fun stop() {
         job.cancelChildren()
@@ -68,23 +66,31 @@ class LocationService @Inject constructor(context: Context) : LifecycleObserver,
         Timber.d("Stopped location service")
     }
 
+
     fun getLocation(): LiveData<Location> = LiveDataReactiveStreams.fromPublisher(locationData.toFlowable(BackpressureStrategy.LATEST))
 
+    fun getLocationLoadingStatus() : Completable = Completable.create { emitter ->
 
-    fun setLocationNotAvailableOnStartUpCallback(
-        callback: LocationServiceNotAvailableOnStartUpCallback
-    ) {
-        noGpsCallback = callback
+        val gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        val networkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+
+        if(!gpsEnabled && !networkEnabled) {
+            emitter.onError(RuntimeException("Location seems to be disabled"))
+        }
+        locationData.firstOrError()
+            .doOnError {
+                Timber.d("Error loading first location")
+                emitter.onError(it)
+            }
+            .doOnSuccess {
+                Timber.d("First location: $it")
+                emitter.onComplete()
+            }
+            .subscribe()
     }
-
-
 
     override fun onLocationResult(locationResult: LocationResult?) {
         locationResult?.lastLocation?.let { locationData.onNext(it) }
-    }
-
-    interface LocationServiceNotAvailableOnStartUpCallback {
-        fun handleLocationNotAvailableOnStartUp()
     }
 
 }
