@@ -14,6 +14,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import fi.valtteri.birdwatcher.ui.addentry.AddEntryActivity
+import fi.valtteri.birdwatcher.ui.observations.ObservationsFragment
 import fi.valtteri.birdwatcher.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity(),
 
             }
             resources.getText(R.string.observations) -> {
+                transaction.replace(main_view.id, ObservationsFragment.newInstance())
 
             }
             resources.getText(R.string.settings) -> {

@@ -34,4 +34,6 @@ class ObservationRepository @Inject constructor(
 
     }
 
+    fun getObservations() = observationDao.getAllObservations()
+
 }

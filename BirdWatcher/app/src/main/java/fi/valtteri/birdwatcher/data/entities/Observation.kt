@@ -16,5 +16,11 @@ data class Observation (
     val latitude: Double? = null,
     val longitude: Double? = null,
     val picUri: Uri? = null
-)
+) {
+    companion object {
+        const val SORT_TIMESTAMP_ASCENDING = 1
+        const val SORT_TIMESTAMP_DESCENDING = 2
+
+    }
+}
 

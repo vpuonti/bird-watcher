@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<com.google.android.material.card.MaterialCardView
+        style="@style/Widget.MaterialComponents.CardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/mtrl_card_spacing"
+        android:layout_marginTop="@dimen/mtrl_card_spacing"
+        android:layout_marginRight="@dimen/mtrl_card_spacing"
+        android:minHeight="200dp" xmlns:android="http://schemas.android.com/apk/res/android"
+        >
 
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="HELLO MY DUDES"
+    <TextView
+            android:id="@+id/card_timestamp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
     />
 
-</LinearLayout>
+    <ImageView
+            android:id="@+id/card_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    <TextView
+            android:id="@+id/card_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+</com.google.android.material.card.MaterialCardView>
