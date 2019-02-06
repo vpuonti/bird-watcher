@@ -29,8 +29,8 @@ class ObservationRepository @Inject constructor(
     fun saveObservation(observation: Observation) : Completable {
         return Completable.create { emitter ->
             observationDao.insertObservation(observation).subscribe(
-                {emitter.onComplete()},
-                {emitter.onError(it)}) }
+                { emitter.onComplete()},
+                { emitter.onError(it)}) }
 
     }
 

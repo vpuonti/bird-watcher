@@ -11,13 +11,17 @@ import fi.valtteri.birdwatcher.data.entities.Species
 import fi.valtteri.birdwatcher.data.observations.ObservationRepository
 import fi.valtteri.birdwatcher.data.species.SpeciesRepository
 import io.reactivex.BackpressureStrategy
+import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.Observables
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.coroutines.*
 import org.joda.time.DateTime
 import timber.log.Timber
+import java.lang.RuntimeException
 import java.util.*
 import javax.inject.Inject
 
@@ -163,13 +167,27 @@ class AddEntryViewModel @Inject constructor(
         entryLongitude.onNext(Optional.of(lng))
     }
 
-    fun saveObservation() {
-        latestObservationData.value?.let { it ->
-            if(it.isPresent) {
-                scope.launch(Dispatchers.IO) {
-                    observationRepository.saveObservation(it.get())
-                        .subscribe({Timber.d("Saved entry")}, {Timber.e("Error saving entry $it")})
-                }
+    fun saveObservation(): Completable {
+        return Completable.create { emitter ->
+            if (!latestObservationData.hasValue()) {
+                emitter.onError(RuntimeException("Viewmodel doesn't have latest data from UI to create Observation (???)"))
+            } else {
+                val latestDataObservable = latestObservationData.value!!
+                if (!latestDataObservable.isPresent) {
+                    emitter.onError(RuntimeException("Viewmodel doesn't have latest data from UI to create Observation (???)"))
+                } else {
+                    val latestData = latestDataObservable.get()
+                    Timber.d("Saving $latestData")
+                    scope.launch(Dispatchers.IO) {
+                        observationRepository.saveObservation(latestData)
+                            .subscribe(
+                                {Timber.d("Saved")
+                                    emitter.onComplete()
+                                }, { emitter.onError(it) })
+                    }
+                    }
+
+
             }
         }
     }

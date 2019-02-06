@@ -92,10 +92,12 @@ class AddEntryActivity : AppCompatActivity() {
         // setup species input
         speciesInput = species_input
         speciesInput.isEnabled = true
-        speciesInput.setOnTouchListener { v, l ->
-            speciesSelectionDialog.show()
-            return@setOnTouchListener true
-        }
+        speciesInput.setOpenSpeciesSelection(object : SpeciesSelectionEditText.OpenSpeciesSelection {
+            override fun open() {
+                speciesSelectionDialog.show()
+            }
+
+        })
 
 
         locationProgressBar = progress_horizontal
@@ -316,7 +318,23 @@ class AddEntryActivity : AppCompatActivity() {
     }
 
     private fun handleSaveClick(view: View) {
-        viewModel.saveObservation()
+        locationProgressBar.visibility = View.VISIBLE
+        saveButton.isEnabled = false
+
+        val d = viewModel.saveObservation()
+            .subscribe(
+            {
+                finish()
+            },
+            {
+                Snackbar.make(activity_container, "Error saving observation!", Snackbar.LENGTH_LONG).show()
+                it.printStackTrace()
+                locationProgressBar.visibility = View.GONE
+                saveButton.isEnabled = true
+
+            }
+        )
+        compositeDisposable.add(d)
     }
 
 
@@ -399,7 +417,6 @@ class AddEntryActivity : AppCompatActivity() {
         super.onPause()
         speciesSelectionDialog.dismiss()
         permissionsRationaleDialog.dismiss()
-        compositeDisposable.dispose()
     }
 
     override fun onDestroy() {
