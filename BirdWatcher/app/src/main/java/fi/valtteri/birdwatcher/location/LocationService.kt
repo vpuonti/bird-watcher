@@ -27,7 +27,7 @@ class LocationService @Inject constructor(context: Context) : LifecycleObserver,
     private val job = Job()
     private val scope = CoroutineScope(Dispatchers.IO + job)
 
-    private val locationData: MutableLiveData<Location> = MutableLiveData()
+    private val locationData: MutableLiveData<Location?> = MutableLiveData()
     private val fusedLocationProvider = FusedLocationProviderClient(context)
 
 
@@ -63,11 +63,10 @@ class LocationService @Inject constructor(context: Context) : LifecycleObserver,
         Timber.d("Stopped location service")
     }
 
-    fun getLocation(): LiveData<Location> = locationData
+    fun getLocation(): LiveData<Location?> = locationData
 
 
     override fun onLocationResult(locationResult: LocationResult?) {
-        Timber.d("onLocationResult")
         locationResult?.lastLocation?.let { locationData.value = it }
     }
 

@@ -42,21 +42,28 @@ class AddEntryViewModel @Inject constructor(
 
 
     // data to make observation
-    private var rarity: ObservationRarity? = null
 
     private val entryTimestamp: BehaviorSubject<DateTime> = BehaviorSubject.create()
     private val entrySpeciesName: BehaviorSubject<String> = BehaviorSubject.createDefault("")
     private val entryDescription: BehaviorSubject<String> = BehaviorSubject.createDefault("")
     private val entryPicFileName: Observable<String> = entryTimestamp.map { "${it.millis}_bird" }
     private val entryPicUri: BehaviorSubject<Uri> = BehaviorSubject.create()
+    private val entryLatitude: BehaviorSubject<Double> = BehaviorSubject.create()
+    private val entryLongitude: BehaviorSubject<Double> = BehaviorSubject.create()
+    private val entryRarity: BehaviorSubject<ObservationRarity> = BehaviorSubject.create()
 
+    private val takeIntoEvaluation :List<BehaviorSubject<out Any>> = listOf(entrySpeciesName, entryDescription, entryLongitude, entryLatitude)
 
-    private val saveAllowed = Observable.combineLatest<String, String, Boolean>(
-        entryDescription, entrySpeciesName,
-            BiFunction { desc: String, name: String ->
-                return@BiFunction (desc.isNotEmpty() && name.isNotEmpty())
-            }
-        )
+    private val saveAllowed =
+        Observable.combineLatest(takeIntoEvaluation) {args ->
+            val name: String = args[0] as String
+            val desc: String = args[1] as String
+            val lat: Double = args[2] as Double
+            val lng: Double = args[3] as Double
+            Timber.d("Name: $name\n Desc: $desc\n LatLng: $lat -- $lng")
+            return@combineLatest (name.isNotBlank() && desc.isNotBlank())
+
+        }
         .doOnNext { Timber.d("All gucci: $it") }
 
     init {
@@ -71,8 +78,8 @@ class AddEntryViewModel @Inject constructor(
 
     fun getSpeciesNames() : LiveData<List<String>> = LiveDataReactiveStreams.fromPublisher(speciesRepository.getSpeciesNames())
 
+    // getter for entry livedata
     fun getEntryTimestamp() = LiveDataReactiveStreams.fromPublisher(entryTimestamp.toFlowable(BackpressureStrategy.LATEST))
-
     fun getEntrySpeciesName() = LiveDataReactiveStreams.fromPublisher(entrySpeciesName.toFlowable(BackpressureStrategy.LATEST))
     fun getEntryDescription() = LiveDataReactiveStreams.fromPublisher(entryDescription.toFlowable(BackpressureStrategy.LATEST))
     fun getEntryPicFileName() = LiveDataReactiveStreams.fromPublisher(entryPicFileName.toFlowable(BackpressureStrategy.LATEST))
@@ -89,7 +96,7 @@ class AddEntryViewModel @Inject constructor(
     }
 
     fun setEntryRarity(rarity: ObservationRarity) {
-        this.rarity = rarity
+        entryRarity.onNext(rarity)
     }
 
     fun setEntryDescription(desc: String) {
@@ -98,6 +105,11 @@ class AddEntryViewModel @Inject constructor(
 
     fun setPictureUri(uri: Uri) {
         entryPicUri.onNext(uri)
+    }
+
+    fun setEntryLatLng(lat: Double, lng: Double) {
+        entryLatitude.onNext(lat)
+        entryLongitude.onNext(lng)
     }
 
     override fun onCleared() {

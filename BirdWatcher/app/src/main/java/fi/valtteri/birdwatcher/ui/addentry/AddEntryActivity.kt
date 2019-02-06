@@ -10,9 +10,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.view.LayoutInflater
-import android.view.View
-import android.view.WindowManager
+import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -25,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import dagger.android.AndroidInjection
 import fi.valtteri.birdwatcher.R
@@ -68,6 +67,8 @@ class AddEntryActivity : AppCompatActivity() {
     private var entryFile: File? = null
     private var currentPicUri: Uri? = null
 
+    lateinit var saveButton: MaterialButton
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,17 +76,23 @@ class AddEntryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_entry)
         // set keyboard toggle
-        //.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        //window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close_white_24dp)
+
         collapsing_toolbar.title = resources.getText(R.string.new_observation)
         camera_fab.setOnClickListener(this::handleFabClick)
 
         //init dialogs
         initializeDialogs()
+
         addSpeciesBtn = add_species_btn
         addSpeciesBtn.setOnClickListener(this::handleSpeciesSelectionClick)
+
+        saveButton = save_button
+        saveButton.setOnClickListener(this::handleSaveClick)
 
         //setup rarity spinner
         raritySpinner = rarity_spinner
@@ -148,13 +155,17 @@ class AddEntryActivity : AppCompatActivity() {
         })
 
         // observe location
-        locationService.getLocation().observe(this, Observer { location ->
-            latitude_input.setText(location.latitude.toString(), TextView.BufferType.NORMAL)
-            longitude_input.setText(location.longitude.toString(), TextView.BufferType.EDITABLE)
-        })
+        locationService.getLocation().observe(this, Observer { it?.let { location ->
+            val lat = location.latitude
+            val lng = location.longitude
+            latitude_input.setText(lat.toString(), TextView.BufferType.NORMAL)
+            longitude_input.setText(lng.toString(), TextView.BufferType.EDITABLE)
+            viewModel.setEntryLatLng(lat, lng)
+
+        }})
 
         viewModel.isSaveAllowed().observe(this, Observer { saveAllowed ->
-            save_button.isEnabled = saveAllowed
+            saveButton.isEnabled = saveAllowed
         })
 
         askForLocationPermissions()
@@ -237,7 +248,8 @@ class AddEntryActivity : AppCompatActivity() {
         }
 
         val searchView = alertView.species_search
-        searchView.isIconified = false
+        searchView.setIconifiedByDefault(false)
+        //searchView.isIconified = false
         searchView.isSubmitButtonEnabled = false
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -258,6 +270,7 @@ class AddEntryActivity : AppCompatActivity() {
         })
         builder.setView(alertView)
         speciesSelectionDialog = builder.create()
+        speciesSelectionDialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
     }
 
@@ -268,6 +281,12 @@ class AddEntryActivity : AppCompatActivity() {
 
     private fun handleFabClick(view: View) {
        dispatchTakePictureIntent()
+    }
+
+    private fun handleSaveClick(view: View) {
+        viewModel.isSaveAllowed().observe(this, Observer {
+            Timber.d("Saving")
+        })
     }
 
 

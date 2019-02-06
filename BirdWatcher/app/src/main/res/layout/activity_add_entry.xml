@@ -45,7 +45,18 @@
                     app:layout_collapseMode="pin"
                     android:id="@+id/toolbar"
                     app:title="@string/new_observation"
-            />
+            >
+                    <com.google.android.material.button.MaterialButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/save"
+                            android:layout_gravity="end"
+                            android:id="@+id/save_button"
+                            android:enabled="false"
+                            android:backgroundTint="@color/button_colors"
+                            android:layout_marginEnd="10sp"
+                    />
+            </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -54,6 +65,7 @@
             android:fillViewport="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="10sp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
         <include layout="@layout/content_add_entry" />
