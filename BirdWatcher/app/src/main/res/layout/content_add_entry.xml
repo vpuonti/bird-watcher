@@ -83,21 +83,15 @@
         </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
         <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_weight="2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/species"
                 app:errorEnabled="true"
                 android:id="@+id/species_input_container"
         >
 
-                <com.google.android.material.textfield.TextInputEditText
+                <fi.valtteri.birdwatcher.ui.addentry.SpeciesSelectionEditText
                         android:id="@+id/species_input"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -105,16 +99,6 @@
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.button.MaterialButton
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/add_species"
-                android:id="@+id/add_species_btn"
-        />
-
-    </LinearLayout>
 
         <RelativeLayout
                 android:layout_width="match_parent"

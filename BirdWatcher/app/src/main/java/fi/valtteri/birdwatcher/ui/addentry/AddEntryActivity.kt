@@ -9,7 +9,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -51,9 +50,7 @@ class AddEntryActivity : AppCompatActivity() {
     lateinit var viewModel: AddEntryViewModel
 
     lateinit var speciesAdapter: ArrayAdapter<String>
-
-    lateinit var speciesInput: EditText
-    lateinit var addSpeciesBtn: MaterialButton
+    lateinit var speciesInput: SpeciesSelectionEditText
 
     lateinit var descriptionInput: EditText
     lateinit var descriptionInputLayout: TextInputLayout
@@ -81,7 +78,6 @@ class AddEntryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_entry)
         // set keyboard toggle
-        //window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -93,10 +89,16 @@ class AddEntryActivity : AppCompatActivity() {
         //init dialogs
         initializeDialogs()
 
-        locationProgressBar = progress_horizontal
+        // setup species input
+        speciesInput = species_input
+        speciesInput.isEnabled = true
+        speciesInput.setOnTouchListener { v, l ->
+            speciesSelectionDialog.show()
+            return@setOnTouchListener true
+        }
 
-        addSpeciesBtn = add_species_btn
-        addSpeciesBtn.setOnClickListener(this::handleSpeciesSelectionClick)
+
+        locationProgressBar = progress_horizontal
 
         saveButton = save_button
         saveButton.setOnClickListener(this::handleSaveClick)
@@ -135,6 +137,7 @@ class AddEntryActivity : AppCompatActivity() {
         })
 
         viewModel.getEntrySpeciesName().observe(this, Observer { name ->
+            Timber.d("TEXT = $name")
             speciesInput.setText(name, TextView.BufferType.NORMAL)
             if(name.isBlank()) {
                 species_input_container.error = "Add species"
@@ -144,7 +147,6 @@ class AddEntryActivity : AppCompatActivity() {
         })
 
         viewModel.getEntryDescription().observe(this, Observer { description ->
-            Timber.d("Desc: $description")
             if (description.isBlank()) {
                 descriptionInputLayout.error = "Add description"
             } else {
@@ -257,8 +259,6 @@ class AddEntryActivity : AppCompatActivity() {
 
         // setup species adapter
         speciesAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, mutableListOf())
-        // setup species input
-        speciesInput = species_input
 
         val builder = AlertDialog.Builder(this@AddEntryActivity)
 
@@ -272,7 +272,7 @@ class AddEntryActivity : AppCompatActivity() {
             override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 speciesSelectionDialog.dismiss()
                 speciesAdapter.getItem(position)?.let {
-                    viewModel.setSpecies(it)
+                    viewModel.setSpeciesName(it)
 
                 }
             }
@@ -357,11 +357,6 @@ class AddEntryActivity : AppCompatActivity() {
         return file
     }
 
-
-    private fun handleSpeciesSelectionClick(view: View) {
-        speciesSelectionDialog.show()
-
-    }
 
 
 
