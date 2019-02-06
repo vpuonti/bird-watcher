@@ -1,15 +1,9 @@
 package fi.valtteri.birdwatcher.location
 
-import android.Manifest
 import android.content.Context
-import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationListener
 import android.location.LocationManager
-import android.location.LocationProvider
-import android.os.Bundle
 import android.os.Looper
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
@@ -17,27 +11,36 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.tasks.Tasks
+import io.reactivex.BackpressureStrategy
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.coroutines.*
 import timber.log.Timber
 import javax.inject.Inject
 
-class LocationService @Inject constructor(context: Context) : LifecycleObserver, LocationCallback() {
-
+class LocationService @Inject constructor(
+    context: Context,
+    private val locationServiceNotAvailableOnStartUpCallback: LocationServiceNotAvailableOnStartUpCallback
+                                          ) : LifecycleObserver, LocationCallback() {
     private val job = Job()
+
     private val scope = CoroutineScope(Dispatchers.IO + job)
+    private val locationManager: LocationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-    private val locationData: MutableLiveData<Location?> = MutableLiveData()
+    //private val locationData: MutableLiveData<Location?> = MutableLiveData()
     private val fusedLocationProvider = FusedLocationProviderClient(context)
-
+    private val locationData: BehaviorSubject<Location> = BehaviorSubject.create()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     private fun start() {
         scope.launch {
             try {
+                val locationAvailable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                if(!locationAvailable) {
+                    locationServiceNotAvailableOnStartUpCallback.handleLocationNotAvailableOnStartUp()
+                }
                 val lastLocation = Tasks.await(fusedLocationProvider.lastLocation)
                 Timber.d("Initializing location data")
-                locationData.postValue(lastLocation)
+                lastLocation?.also { locationData.onNext(it) }
 
             } catch (e: SecurityException) {
                 Timber.e("Error getting last location: $e")
@@ -55,6 +58,7 @@ class LocationService @Inject constructor(context: Context) : LifecycleObserver,
         }
     }
 
+
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     private fun stop() {
         job.cancelChildren()
@@ -63,12 +67,17 @@ class LocationService @Inject constructor(context: Context) : LifecycleObserver,
         Timber.d("Stopped location service")
     }
 
-    fun getLocation(): LiveData<Location?> = locationData
+    fun getLocation(): LiveData<Location> = LiveDataReactiveStreams.fromPublisher(locationData.toFlowable(BackpressureStrategy.LATEST))
+
+
 
 
     override fun onLocationResult(locationResult: LocationResult?) {
-        locationResult?.lastLocation?.let { locationData.value = it }
+        locationResult?.lastLocation?.let { locationData.onNext(it) }
     }
 
+    interface LocationServiceNotAvailableOnStartUpCallback {
+        fun handleLocationNotAvailableOnStartUp()
+    }
 
 }

@@ -5,7 +5,6 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -23,7 +22,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import dagger.android.AndroidInjection
 import fi.valtteri.birdwatcher.R
@@ -39,7 +37,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 
-class AddEntryActivity : AppCompatActivity() {
+class AddEntryActivity : AppCompatActivity(), LocationService.LocationServiceNotAvailableOnStartUpCallback {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -168,14 +166,22 @@ class AddEntryActivity : AppCompatActivity() {
             saveButton.isEnabled = saveAllowed
         })
 
-        askForLocationPermissions()
+        handleLocationPermissions()
         descriptionInput.addTextChangedListener { it?.let { editable ->  viewModel.setEntryDescription(editable.toString()) } }
 
 
     }
 
 
-    private fun askForLocationPermissions() {
+    private fun sendLocationPermissionRequest() {
+        ActivityCompat.requestPermissions(this@AddEntryActivity,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            AddEntryActivity.FINE_LOCATION_REQUEST_CODE
+        )
+
+    }
+
+    private fun handleLocationPermissions() {
         //check location permissions
         if(ContextCompat.checkSelfPermission(
                 applicationContext,
@@ -188,7 +194,7 @@ class AddEntryActivity : AppCompatActivity() {
                 permissionsRationaleDialog.show()
 
             } else {
-                requestLocationPermission()
+                sendLocationPermissionRequest()
             }
         } else {
             //we have permissions
@@ -199,20 +205,12 @@ class AddEntryActivity : AppCompatActivity() {
 
     }
 
-    private fun requestLocationPermission() {
-        ActivityCompat.requestPermissions(this@AddEntryActivity,
-            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-            AddEntryActivity.FINE_LOCATION_REQUEST_CODE
-        )
-
-    }
-
     private fun initializeDialogs() {
         //permissions rationale dialog
         permissionsRationaleDialog = AlertDialog.Builder(this@AddEntryActivity)
             .setMessage(R.string.location_rationale)
             .setPositiveButton("Yes") { dialog, id ->
-                requestLocationPermission()
+                sendLocationPermissionRequest()
             }
             .setNeutralButton("Cancel") {dialog, id ->
                 finish()
@@ -366,6 +364,10 @@ class AddEntryActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun handleLocationNotAvailableOnStartUp() {
+        Toast.makeText(this, "LOCATION NOT AVAILABLE!!!!", Toast.LENGTH_LONG).show()
     }
 
 

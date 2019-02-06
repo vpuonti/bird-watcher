@@ -67,7 +67,6 @@ class SpeciesRepository @Inject constructor(
 
     fun getSpeciesNames(): Flowable<List<String>> =
         settingsRepository.getLanguagePref().switchMap { mapSpeciesToNames(it) }
-            .doOnNext { Timber.d("Names: $it") }
 
 
     private fun fetchNewSpeciesDataAndUpdateDb() : Completable {
