@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="Filter by"
+          android:id="@+id/filter_by"
+          app:showAsAction="ifRoom">
+        <menu>
+            <item android:id="@+id/filter_ascending"
+                  android:title="Oldest" />
+            <item android:id="@+id/filter_descending"
+                  android:title="Newest" />
+        </menu>
+    </item>
+
+    <item android:title="Search"
+          android:id="@+id/observation_search"
+          android:icon="@drawable/ic_search_white_24dp"
+          app:showAsAction="always"
+          app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+
+</menu>

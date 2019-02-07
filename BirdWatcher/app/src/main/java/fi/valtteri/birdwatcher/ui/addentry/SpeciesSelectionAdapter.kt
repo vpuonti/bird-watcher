@@ -83,10 +83,10 @@ class SpeciesSelectionAdapter(context: Context,
         }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-            val fList = results?.values as? List<*>
-            val fItems = fList?.map { it as Species }
+            val fList = results?.values as List<*>
+            val fItems = fList.map { it as Species }
 
-            fItems?.let { items ->
+            fItems.let { items ->
                 filteredItems = items
                 Timber.d("Setting ${items.size} species to filteredItems")
             }

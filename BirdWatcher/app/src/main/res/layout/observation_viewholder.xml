@@ -1,27 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-        style="@style/Widget.MaterialComponents.CardView"
-        android:layout_width="match_parent"
+<androidx.cardview.widget.CardView
+        xmlns:tools="http://schemas.android.com/tools" style="@style/Widget.MaterialComponents.CardView"
         android:layout_height="wrap_content"
+        android:layout_width="match_parent"
         android:layout_marginLeft="@dimen/mtrl_card_spacing"
         android:layout_marginTop="@dimen/mtrl_card_spacing"
         android:layout_marginRight="@dimen/mtrl_card_spacing"
-        android:minHeight="200dp" xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         >
 
-    <TextView
-            android:id="@+id/card_timestamp"
+    <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-    />
+            android:layout_height="150sp">
 
-    <ImageView
-            android:id="@+id/card_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    <TextView
-            android:id="@+id/card_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        <ImageView
 
-</com.google.android.material.card.MaterialCardView>
+                android:padding="15sp"
+                android:id="@+id/card_image"
+                android:layout_width="150sp"
+                android:layout_height="150sp"
+        />
+
+        <LinearLayout
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+            <TextView
+                    android:textStyle="bold"
+                    android:id="@+id/card_timestamp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+            />
+            <TextView
+                    android:textStyle="bold"
+                    android:id="@+id/card_rarity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+            />
+            <TextView
+                    android:textStyle="italic"
+                    android:id="@+id/card_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+            />
+            <TextView
+                    android:id="@+id/card_notes_label"
+                    android:layout_width="match_parent"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"/>
+            <TextView
+                    android:id="@+id/card_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

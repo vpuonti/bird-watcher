@@ -3,8 +3,7 @@ package fi.valtteri.birdwatcher
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -14,6 +13,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import fi.valtteri.birdwatcher.ui.addentry.AddEntryActivity
+import fi.valtteri.birdwatcher.ui.main.MainFragment
 import fi.valtteri.birdwatcher.ui.observations.ObservationsFragment
 import fi.valtteri.birdwatcher.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(),
     HasSupportFragmentInjector,
-    BottomNavigationView.OnNavigationItemSelectedListener
+        BottomNavigationView.OnNavigationItemSelectedListener
 {
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = supportFragmentInjector
 
@@ -34,10 +34,19 @@ class MainActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         bottom_navigation.setOnNavigationItemSelectedListener(this)
+        bottom_navigation.selectedItemId = 0
         fab_observation.setOnClickListener(this::handleFabClick)
 
+
+    }
+
+    fun fragmentLoadingReady() {
+        when(progress_horizontal.visibility) {
+            View.VISIBLE -> {
+                progress_horizontal.visibility = View.GONE
+            }
+        }
 
     }
 
@@ -45,10 +54,11 @@ class MainActivity : AppCompatActivity(),
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         Timber.d("Selected ${item.title}")
+        progress_horizontal.visibility = View.VISIBLE
         val transaction = supportFragmentManager.beginTransaction()
         when (item.title) {
             resources.getText(R.string.main) -> {
-
+                transaction.replace(main_view.id, MainFragment.newInstance())
             }
             resources.getText(R.string.observations) -> {
                 transaction.replace(main_view.id, ObservationsFragment.newInstance())
@@ -76,6 +86,12 @@ class MainActivity : AppCompatActivity(),
         progress_horizontal.visibility = View.GONE
 
     }
+
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        val inflater: MenuInflater = menuInflater
+//        inflater.inflate(R.menu.observationview_menu, menu)
+//        return true
+//    }
 
 
     companion object {

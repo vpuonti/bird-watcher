@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.AndroidSupportInjection
+import fi.valtteri.birdwatcher.MainActivity
 
 import fi.valtteri.birdwatcher.R
 import kotlinx.android.synthetic.main.settings_fragment.view.*
@@ -30,11 +31,15 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var adapter: ArrayAdapter<CharSequence>
     private lateinit var spinner: Spinner
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidSupportInjection.inject(this)
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        AndroidSupportInjection.inject(this)
 
         val view = inflater.inflate(R.layout.settings_fragment, container, false)
 
@@ -46,6 +51,7 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+        (activity as MainActivity).fragmentLoadingReady()
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SettingsViewModel::class.java)
         viewModel.getCurrentLangSetting().observe(this, Observer {
