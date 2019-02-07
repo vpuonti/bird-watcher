@@ -9,6 +9,7 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.button.MaterialButton
 import fi.valtteri.birdwatcher.R
 import kotlinx.android.synthetic.main.observation_viewholder.view.*
 import org.joda.time.format.DateTimeFormat
@@ -44,7 +45,10 @@ class ObservationCardDataAdapter : RecyclerView.Adapter<ObservationCardDataAdapt
         private val context: Context,
         private val onOpenMapsClickListener: ((ObservationCardData) -> Unit)? ) : RecyclerView.ViewHolder(view) {
 
+        val openInMapsBtn: MaterialButton = itemView.card_open_location_button
+
         fun bind(observation: ObservationCardData) {
+
             itemView.card_timestamp.text = observation.timeStamp.toString(DateTimeFormat.mediumDateTime())
             itemView.card_rarity.text = observation.rarity.toString()
             itemView.card_name.text = observation.speciesDisplayName
@@ -59,10 +63,12 @@ class ObservationCardDataAdapter : RecyclerView.Adapter<ObservationCardDataAdapt
             itemView.card_notes.text = observation.notes
 
             if(observation.latitude != null && observation.longitude != null) {
-                itemView.card_open_location_button.visibility = View.VISIBLE
-                itemView.card_open_location_button.setOnClickListener {
+                openInMapsBtn.visibility = View.VISIBLE
+                openInMapsBtn.setOnClickListener {
                     onOpenMapsClickListener?.invoke(observation)
                 }
+            } else {
+                openInMapsBtn.visibility = View.GONE
             }
 
 
