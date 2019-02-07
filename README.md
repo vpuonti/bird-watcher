@@ -36,7 +36,7 @@ Bird data from Finnish bird atlas: http://atlas3.lintuatlas.fi/taustaa/kaytto
 
 ## How to install (to compatible phone)
 
-1. Download .apk
+1. Download `bird-watcher-debug.apk`: https://github.com/vpuonti/bird-watcher/raw/master/bird-watcher-debug.apk on your phone
 2. Install
 
 ## Screenshots
