@@ -8,8 +8,8 @@ import com.squareup.moshi.JsonQualifier
 
 @Entity(tableName = "species")
 data class Species (
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey
+    val id: Int,
     @Json(name = "speciesAbbr")
     val abbreviation: String,
     @Json(name = "speciesSCI")

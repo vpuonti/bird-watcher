@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import fi.valtteri.birdwatcher.R
-import fi.valtteri.birdwatcher.data.entities.Observation
 import kotlinx.android.synthetic.main.observation_viewholder.view.*
 import org.joda.time.format.DateTimeFormat
 

@@ -131,6 +131,7 @@ class AddEntryActivity : AppCompatActivity() {
 
         viewModel.getSpecies().observe(this, Observer {birds ->
             speciesAdapter.setItems(birds)
+            speciesInput.hint="${birds.size} species."
         })
 
         viewModel.getEntryTimestamp().observe(this, Observer { timestamp ->

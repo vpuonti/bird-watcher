@@ -6,16 +6,14 @@ import fi.valtteri.birdwatcher.R
 import fi.valtteri.birdwatcher.data.api.BirdService
 import fi.valtteri.birdwatcher.data.entities.Species
 import fi.valtteri.birdwatcher.data.settings.SettingsRepository
-import io.reactivex.Completable
-import io.reactivex.Flowable
+import io.reactivex.*
 import io.reactivex.rxkotlin.Flowables
+import io.reactivex.rxkotlin.Singles
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.BehaviorSubject
 import org.joda.time.DateTime
 import org.joda.time.Hours
 import org.joda.time.Seconds
 import timber.log.Timber
-import java.lang.Exception
 import java.lang.IllegalArgumentException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -27,55 +25,61 @@ class SpeciesRepository @Inject constructor(
     private val sharedPreferences: SharedPreferences,
     private val settingsRepository: SettingsRepository,
     private val context: Context
-) : SharedPreferences.OnSharedPreferenceChangeListener {
+)  {
 
 
-    private val speciesLastUpdated: BehaviorSubject<DateTime> = BehaviorSubject.create()
 
-    init {
-        if(getLastUpdatedFromSharedPrefs() == null) {
-            fetchNewSpeciesDataAndUpdateDb()
-        }
+    private val speciesIsEmpty: Single<Boolean> = speciesDao.getSpeciesSingle()
+        .flatMap { it -> Single.just(it.isEmpty()) }
+
+    private val dataFresh: Single<Boolean> = Singles.zip(Single.just(isFresh()), speciesIsEmpty) { fresh, empty ->
+        val freshWhen = (!empty.or(!fresh))
+        Timber.d("Freshness: $freshWhen")
+        return@zip freshWhen
     }
+
 
     fun getSpecies() : Flowable<List<Species>> {
 
-        if (!isFresh()) {
-            Timber.d("Data not fresh")
-            fetchNewSpeciesDataAndUpdateDb()
-                .subscribeOn(Schedulers.io())
-                .doOnComplete { Timber.d("Updated db data") }
-                .doOnError { Timber.e("Error updating db data $it")}
-                .subscribe()
+        dataFresh.flatMapCompletable { fresh ->
+            if (fresh) {
+                return@flatMapCompletable Completable.complete()
+            } else {
+                return@flatMapCompletable fetchNewSpeciesDataAndUpdateDb()
+            }
+        }.subscribeOn(Schedulers.io()).subscribe()
 
-        } else {
-            Timber.d("Data is fresh")
-        }
-        return Flowables.combineLatest(speciesDao.getSpecies(), settingsRepository.getLanguagePref()) {species, langPref ->
+        return Flowables.combineLatest(
+            speciesDao.getSpecies(),
+            settingsRepository.getLanguagePref()
+        ) { species, langPref ->
             val languages = context.resources.getStringArray(R.array.species_language_choices)
+
             return@combineLatest species.map { bird ->
-                    when (languages.indexOf(langPref)) {
-                        0 -> {
-                            bird.displayName = bird.scientificName
-                        }
-                        1 -> {
-                            bird.displayName = bird.finnishName
-                        }
-                        2 -> {
-                            bird.displayName = bird.englishName
-                        }
-                        3 -> {
-                            bird.displayName = bird.swedishName
-                        }
-                        else -> {
-                            throw IllegalArgumentException("Invalid language: $langPref")
-                        }
+                when (languages.indexOf(langPref)) {
+                    0 -> {
+                        bird.displayName = bird.scientificName
+                    }
+                    1 -> {
+                        bird.displayName = bird.finnishName
+                    }
+                    2 -> {
+                        bird.displayName = bird.englishName
+                    }
+                    3 -> {
+                        bird.displayName = bird.swedishName
+                    }
+                    else -> {
+                        throw IllegalArgumentException("Invalid language: $langPref")
+                    }
                 }
                 return@map bird
             }
         }
 
     }
+
+
 
     private fun isFresh(): Boolean {
         val updatedOn = getLastUpdatedFromSharedPrefs() ?: return false
@@ -87,7 +91,7 @@ class SpeciesRepository @Inject constructor(
 
 
     private fun fetchNewSpeciesDataAndUpdateDb() : Completable {
-        return Completable.create {completableEmitter ->
+        return Completable.create { completableEmitter ->
             birdService.getSpecies()
                 .subscribeOn(Schedulers.io())
                 .subscribe (
@@ -102,6 +106,7 @@ class SpeciesRepository @Inject constructor(
                     })
 
         }
+
     }
 
 
@@ -114,13 +119,7 @@ class SpeciesRepository @Inject constructor(
         }
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        when(key) {
-            SPECIES_FETCHED -> {
-                getLastUpdatedFromSharedPrefs()?.also { speciesLastUpdated.onNext(it) }
-            }
-        }
-    }
+
 
 
 

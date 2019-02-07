@@ -66,7 +66,8 @@ class SpeciesSelectionAdapter(context: Context,
                 results.count = originalItems.size
                 Timber.d("Result: all original ${originalItems.size} items")
             } else {
-                val filteredResults = originalItems.filter {
+                val orig = originalItems.map { it }
+                val filteredResults = orig.filter {
                     val dName = it.displayName
                     if(dName == null) {
                         return@filter false
