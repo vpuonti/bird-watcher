@@ -29,6 +29,7 @@ import fi.valtteri.birdwatcher.R
 import fi.valtteri.birdwatcher.data.entities.ObservationRarity
 import fi.valtteri.birdwatcher.location.LocationService
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.activity_add_entry.*
 import kotlinx.android.synthetic.main.content_add_entry.*
 import kotlinx.android.synthetic.main.species_selector_layout.view.*
@@ -71,13 +72,16 @@ class AddEntryActivity : AppCompatActivity() {
 
     private val compositeDisposable = CompositeDisposable()
 
+    private var locationAllowed: BehaviorSubject<Boolean> = BehaviorSubject.createDefault(false)
+    private var currentObservationPicUri: Uri? = null
+    private var picIsSaved: Boolean = false
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_entry)
-        // set keyboard toggle
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -167,7 +171,6 @@ class AddEntryActivity : AppCompatActivity() {
         })
 
         // observe location
-        checkLocationLoadingStatus()
         locationService.getLocation().observe(this, Observer { location ->
             val lat = location.latitude
             val lng = location.longitude
@@ -182,6 +185,16 @@ class AddEntryActivity : AppCompatActivity() {
         viewModel.isSaveAllowed().observe(this, Observer { saveAllowed ->
             saveButton.isEnabled = saveAllowed
         })
+
+        locationAllowed.subscribe { allowed ->
+            if(allowed) {
+                latitude_input.visibility = View.VISIBLE
+                longitude_input.visibility = View.VISIBLE
+            } else {
+                latitude_input.visibility = View.GONE
+                longitude_input.visibility = View.GONE
+            }
+        }
 
         handleLocationPermissions()
         descriptionInput.addTextChangedListener { it?.let { editable ->  viewModel.setEntryDescription(editable.toString()) } }
@@ -226,6 +239,7 @@ class AddEntryActivity : AppCompatActivity() {
                 applicationContext,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             //permission not granted
+            locationAllowed.onNext(false)
             if(ActivityCompat.shouldShowRequestPermissionRationale(
                     this@AddEntryActivity, Manifest.permission.ACCESS_FINE_LOCATION)) {
                 //show rationale to user
@@ -237,6 +251,7 @@ class AddEntryActivity : AppCompatActivity() {
             }
         } else {
             //we have permissions
+            locationAllowed.onNext(true)
             Timber.d("We have permissions")
             startLocationService()
 
@@ -252,10 +267,12 @@ class AddEntryActivity : AppCompatActivity() {
                 sendLocationPermissionRequest()
             }
             .setNeutralButton("Cancel") {dialog, id ->
-                finish()
+                //finish()
             }
             .setCancelable(true)
-            .setOnCancelListener { finish() }
+            .setOnCancelListener {
+                //finish()
+            }
             .create()
 
         //species selection dialog
@@ -315,6 +332,7 @@ class AddEntryActivity : AppCompatActivity() {
 
     private fun startLocationService() {
         lifecycle.addObserver(locationService)
+        checkLocationLoadingStatus()
     }
 
 
@@ -329,6 +347,7 @@ class AddEntryActivity : AppCompatActivity() {
         val d = viewModel.saveObservation()
             .subscribe(
             {
+                picIsSaved = true
                 finish()
             },
             {
@@ -355,11 +374,11 @@ class AddEntryActivity : AppCompatActivity() {
                     null
                 }
                 photoFile?.also {
-                        val photoUri: Uri = FileProvider.getUriForFile(
-                            this,
-                            "fi.valtteri.birdwatcher.fileprovider",
-                            it
-                        )
+                    val photoUri: Uri = FileProvider.getUriForFile(
+                        this,
+                        "fi.valtteri.birdwatcher.fileprovider",
+                        it)
+                    currentPicUri = photoUri
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
                         startActivityForResult(takePictureIntent, PICTURE_REQUEST_CODE)
                     }
@@ -405,15 +424,17 @@ class AddEntryActivity : AppCompatActivity() {
         when(requestCode) {
             AddEntryActivity.FINE_LOCATION_REQUEST_CODE -> {
                 if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Timber.d("User granted location permissions")
-                    startLocationService()
-
+                    handleLocationPermissions()
                 } else {
                     Timber.d("User denied location permission.")
-                    finish()
                 }
             }
         }
+    }
+
+    private fun deletePicture(uri: Uri) {
+        val file = File(uri.path)
+        file.delete()
     }
 
 
@@ -425,10 +446,13 @@ class AddEntryActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
+        if(!picIsSaved) {
+            currentPicUri?.also { deletePicture(it) }
+        }
         speciesSelectionDialog.dismiss()
         permissionsRationaleDialog.dismiss()
         compositeDisposable.dispose()
+        super.onDestroy()
     }
 
     companion object {

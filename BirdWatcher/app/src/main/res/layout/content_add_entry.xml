@@ -22,6 +22,7 @@
                 android:layout_height="wrap_content"
                 style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
                 android:indeterminate="true"
+                android:visibility="gone"
 
         />
 
