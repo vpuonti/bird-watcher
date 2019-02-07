@@ -46,7 +46,9 @@ class ObservationsViewModel @Inject constructor(
                 rarity = observation.rarity,
                 notes = observation.description,
                 timeStamp = observation.timeStamp,
-                pictureUri = observation.picUri
+                pictureUri = observation.picUri,
+                latitude = observation.latitude,
+                longitude = observation.longitude
             )
         }
     }

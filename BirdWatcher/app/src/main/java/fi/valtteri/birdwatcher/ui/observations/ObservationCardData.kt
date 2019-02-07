@@ -9,5 +9,7 @@ data class ObservationCardData (
     val rarity: ObservationRarity,
     val notes: String,
     val timeStamp: DateTime,
-    val pictureUri: Uri?
+    val pictureUri: Uri?,
+    val latitude: Double?,
+    val longitude: Double?
     )

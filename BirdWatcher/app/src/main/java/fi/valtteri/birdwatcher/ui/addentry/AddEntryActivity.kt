@@ -279,7 +279,6 @@ class AddEntryActivity : AppCompatActivity() {
 
                 }
             }
-
         }
 
         val searchView = alertView.species_search
@@ -303,9 +302,14 @@ class AddEntryActivity : AppCompatActivity() {
             }
 
         })
+
+        val closeFab = alertView.fab_close_species_selection
         builder.setView(alertView)
         speciesSelectionDialog = builder.create()
         speciesSelectionDialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        closeFab.setOnClickListener {
+            speciesSelectionDialog.dismiss()
+        }
 
     }
 

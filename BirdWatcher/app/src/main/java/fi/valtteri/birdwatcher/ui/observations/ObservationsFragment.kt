@@ -1,5 +1,7 @@
 package fi.valtteri.birdwatcher.ui.observations
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
@@ -14,7 +16,9 @@ import fi.valtteri.birdwatcher.MainActivity
 import fi.valtteri.birdwatcher.R
 import fi.valtteri.birdwatcher.data.entities.Observation
 import kotlinx.android.synthetic.main.observations_fragment.view.*
+import org.joda.time.format.DateTimeFormat
 import javax.inject.Inject
+
 
 class ObservationsFragment : Fragment() {
 
@@ -41,7 +45,7 @@ class ObservationsFragment : Fragment() {
         layoutManager = LinearLayoutManager(context)
         recyclerview.adapter = adapter
         recyclerview.layoutManager = layoutManager
-
+        adapter.setOnOpenLocationClickListener(this::launchMapIntentToLocation)
         setHasOptionsMenu(true)
         return view
     }
@@ -85,6 +89,20 @@ class ObservationsFragment : Fragment() {
             }
         }
         return true
+    }
+
+    private fun launchMapIntentToLocation(observationCardData: ObservationCardData) {
+        val latitude: Double = observationCardData.latitude ?: throw IllegalArgumentException("Given observationCardData has null latitude")
+        val longitude: Double = observationCardData.longitude ?: throw IllegalArgumentException("Given observationCardData has null longitude")
+        val labelName: String = observationCardData.speciesDisplayName ?: "Observation ${observationCardData.timeStamp.toString(DateTimeFormat.shortDateTime())}"
+        val mapsIntentUri = Uri.parse("geo:<$latitude,$longitude?z=15&q=$latitude,$longitude($labelName)")
+        val mapIntent = Intent(Intent.ACTION_VIEW, mapsIntentUri)
+        mapIntent.setPackage("com.google.android.apps.maps")
+        context?.let { ctx ->
+            if (mapIntent.resolveActivity(ctx.packageManager) != null) {
+                startActivity(mapIntent)
+            }
+        }
     }
 
     companion object {

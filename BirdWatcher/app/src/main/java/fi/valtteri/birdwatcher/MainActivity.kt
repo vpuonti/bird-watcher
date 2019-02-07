@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(),
         setContentView(R.layout.activity_main)
 
         bottom_navigation.setOnNavigationItemSelectedListener(this)
-        bottom_navigation.selectedItemId = 0
+        bottom_navigation.selectedItemId = R.id.bottom_navigation_observations
         fab_observation.setOnClickListener(this::handleFabClick)
 
 

@@ -25,5 +25,7 @@
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
     <string name="save">Save</string>
+    <string name="latest_observation">Latest observation!</string>
+    <string name="close">Close</string>
 
 </resources>
