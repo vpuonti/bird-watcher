@@ -13,9 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.android.support.AndroidSupportInjection
 
 import fi.valtteri.birdwatcher.R
-import fi.valtteri.birdwatcher.di.BirdWatcherViewModelFactory
 import kotlinx.android.synthetic.main.observations_fragment.view.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class ObservationsFragment : Fragment() {
@@ -24,7 +22,7 @@ class ObservationsFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var viewModel: ObservationsViewModel
-    private lateinit var adapter: ObservationsAdapter
+    private lateinit var adapter: ObservationCardDataAdapter
     private lateinit var recyclerview: RecyclerView
     private lateinit var layoutManager: LinearLayoutManager
 
@@ -33,7 +31,7 @@ class ObservationsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.observations_fragment, container, false)
-        adapter = ObservationsAdapter()
+        adapter = ObservationCardDataAdapter()
         recyclerview = view.observation_recycler
         layoutManager = LinearLayoutManager(context)
         recyclerview.adapter = adapter
@@ -46,10 +44,8 @@ class ObservationsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ObservationsViewModel::class.java)
-        viewModel.getObservations().observe(this, Observer { observables ->
-            val obs = observables.map { it.timeStamp.millis }
-            Timber.d("$obs")
-            adapter.setItems(observables)
+        viewModel.getObservationCardData().observe(this, Observer { observations ->
+            adapter.setItems(observations)
         })
     }
 

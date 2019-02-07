@@ -8,6 +8,7 @@ import fi.valtteri.birdwatcher.data.entities.Species
 import fi.valtteri.birdwatcher.data.settings.SettingsRepository
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.rxkotlin.Flowables
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import org.joda.time.DateTime
@@ -50,11 +51,30 @@ class SpeciesRepository @Inject constructor(
         } else {
             Timber.d("Data is fresh")
         }
-        return speciesDao.getSpecies()
-            .doOnNext {
-                Timber.d("Fetched ${it.size} species from DB")
+        return Flowables.combineLatest(speciesDao.getSpecies(), settingsRepository.getLanguagePref()) {species, langPref ->
+            val languages = context.resources.getStringArray(R.array.species_language_choices)
+            return@combineLatest species.map { bird ->
+                    when (languages.indexOf(langPref)) {
+                        0 -> {
+                            bird.displayName = bird.scientificName
+                        }
+                        1 -> {
+                            bird.displayName = bird.finnishName
+                        }
+                        2 -> {
+                            bird.displayName = bird.englishName
+                        }
+                        3 -> {
+                            bird.displayName = bird.swedishName
+                        }
+                        else -> {
+                            throw IllegalArgumentException("Invalid language: $langPref")
+                        }
+                }
+                return@map bird
             }
-            .filter { it.isNotEmpty() }
+        }
+
     }
 
     private fun isFresh(): Boolean {
@@ -64,8 +84,6 @@ class SpeciesRepository @Inject constructor(
         return (Hours.hoursBetween(updatedOn, DateTime.now()).hours < 12)
     }
 
-    fun getSpeciesNames(): Flowable<List<String>> =
-        settingsRepository.getLanguagePref().switchMap { mapSpeciesToNames(it) }
 
 
     private fun fetchNewSpeciesDataAndUpdateDb() : Completable {
@@ -86,34 +104,6 @@ class SpeciesRepository @Inject constructor(
         }
     }
 
-    /**
-     * If language: scientific -> map List<Species> to List<String> where String = Species.scientificName
-     * Same for all configured languages. (Configured in res/values/strings as <string-array>)
-     */
-    private fun mapSpeciesToNames(language: String): Flowable<List<String>> {
-        val languages = context.resources.getStringArray(R.array.species_language_choices)
-        return getSpecies().map { it ->
-                return@map it.map { species ->
-                    when (languages.indexOf(language)) {
-                        0 -> {
-                            species.scientificName
-                        }
-                        1 -> {
-                            species.finnishName
-                        }
-                        2 -> {
-                            species.englishName
-                        }
-                        3 -> {
-                            species.swedishName
-                        }
-                        else -> {
-                            throw IllegalArgumentException("Invalid language: $language")
-                        }
-                    }
-                }
-            }
-    }
 
     private fun getLastUpdatedFromSharedPrefs():  DateTime? {
         val lastUpdate = sharedPreferences.getString(SPECIES_FETCHED, null)

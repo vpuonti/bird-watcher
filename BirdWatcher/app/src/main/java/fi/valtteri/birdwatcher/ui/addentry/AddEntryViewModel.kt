@@ -39,21 +39,9 @@ class AddEntryViewModel @Inject constructor(
 
     // data to make observation
     private val entryTimestamp: BehaviorSubject<Optional<DateTime>> = BehaviorSubject.createDefault(Optional.empty())
-    private val entrySpeciesName: BehaviorSubject<Optional<String>> = BehaviorSubject.createDefault(Optional.of(""))
-    private val entryDescription: BehaviorSubject<Optional<String>> = BehaviorSubject.createDefault(Optional.of(""))
+    private val entrySpecies: BehaviorSubject<Optional<Species>> = BehaviorSubject.createDefault(Optional.empty())
+    private val entryDescription: BehaviorSubject<Optional<String>> = BehaviorSubject.createDefault(Optional.empty())
 
-    private val entrySpeciesId: Observable<Optional<Int>> = Observables.combineLatest(
-        entrySpeciesName, speciesRepository.getSpecies().toObservable()) { nameOptional, species ->
-            if(!nameOptional.isPresent) {return@combineLatest Optional.empty<Int>()}
-            val name = nameOptional.get()
-            val id: Int? = species.firstOrNull {
-                it.scientificName == name ||
-                        it.finnishName == name ||
-                        it.englishName == name ||
-                        it.swedishName == name
-            }?.id
-            return@combineLatest Optional.ofNullable(id)
-    }
 
     private val entryPicFileName: Observable<Optional<out String>> = entryTimestamp.map { it ->
         if(it.isPresent) {
@@ -72,7 +60,7 @@ class AddEntryViewModel @Inject constructor(
             entryDescription,
             entryTimestamp,
             entryRarity,
-            entrySpeciesId,
+            entrySpecies,
             entryLatitude,
             entryLongitude,
             entryPicUri
@@ -80,15 +68,15 @@ class AddEntryViewModel @Inject constructor(
                 descOptional,
                 timeStampOptional,
                 rarityOptional,
-                speciesIdOptional,
+                speciesOptional,
                 latitudeOptional,
                 longitudeOptional,
                 picUriOptional ->
 
 
         if(timeStampOptional.isPresent && descOptional.isPresent && descOptional.get().isNotBlank() &&
-                speciesIdOptional.isPresent && rarityOptional.isPresent) {
-            val speciesId = speciesIdOptional.get()
+                speciesOptional.isPresent && rarityOptional.isPresent) {
+            val speciesId = speciesOptional.get().id
             val timestamp = timeStampOptional.get()
             val desc = descOptional.get()
             val rarity = rarityOptional.get()
@@ -113,11 +101,10 @@ class AddEntryViewModel @Inject constructor(
     private val latestObservationData: BehaviorSubject<Optional<Observation>> = BehaviorSubject.createDefault(Optional.empty())
 
     private val saveAllowed =
-        Observables.combineLatest(entrySpeciesName, entryDescription) { nameOptional, descriptionOptional ->
-            if(nameOptional.isPresent && descriptionOptional.isPresent) {
-                val name = nameOptional.get()
+        Observables.combineLatest(entrySpecies, entryDescription) { speciesOptional, descriptionOptional ->
+            if(speciesOptional.isPresent && descriptionOptional.isPresent) {
                 val desc = descriptionOptional.get()
-                return@combineLatest (name.isNotBlank() && desc.isNotBlank())
+                return@combineLatest (desc.isNotBlank())
             } else {
                 return@combineLatest false
             }
@@ -133,10 +120,9 @@ class AddEntryViewModel @Inject constructor(
 
 
     fun getSpecies(): LiveData<List<Species>> = LiveDataReactiveStreams.fromPublisher(speciesRepository.getSpecies())
-    fun getSpeciesNames() : LiveData<List<String>> = LiveDataReactiveStreams.fromPublisher(speciesRepository.getSpeciesNames())
     fun getEntryTimestamp() = LiveDataReactiveStreams.fromPublisher(entryTimestamp.filter{it.isPresent}.map { it.get() }.toFlowable(BackpressureStrategy.LATEST))
-    fun getEntrySpeciesName() = LiveDataReactiveStreams.fromPublisher(entrySpeciesName.filter{it.isPresent}.map { it.get() }.toFlowable(BackpressureStrategy.LATEST))
-    fun getEntryDescription() = LiveDataReactiveStreams.fromPublisher(entryDescription.filter{it.isPresent}.map { it.get() }.toFlowable(BackpressureStrategy.LATEST))
+    fun getEntrySpecies() = LiveDataReactiveStreams.fromPublisher(entrySpecies.toFlowable(BackpressureStrategy.LATEST))
+    fun getEntryDescription() = LiveDataReactiveStreams.fromPublisher(entryDescription.toFlowable(BackpressureStrategy.LATEST))
     fun getEntryPicFileName() = LiveDataReactiveStreams.fromPublisher(entryPicFileName.filter{it.isPresent}.map { it.get() }.toFlowable(BackpressureStrategy.LATEST))
     fun getEntryPicUri() = LiveDataReactiveStreams.fromPublisher(entryPicUri.filter{it.isPresent}.map { it.get() }.toFlowable(BackpressureStrategy.LATEST))
     fun isSaveAllowed() = LiveDataReactiveStreams.fromPublisher(saveAllowed.toFlowable(BackpressureStrategy.LATEST))
@@ -146,8 +132,8 @@ class AddEntryViewModel @Inject constructor(
 
     }
 
-    fun setSpeciesName(speciesName: String) {
-        entrySpeciesName.onNext(Optional.of(speciesName))
+    fun setEntrySpecies(species: Species) {
+        entrySpecies.onNext(Optional.of(species))
     }
 
     fun setEntryRarity(rarity: ObservationRarity) {
@@ -155,7 +141,12 @@ class AddEntryViewModel @Inject constructor(
     }
 
     fun setEntryDescription(desc: String) {
-        entryDescription.onNext(Optional.of(desc))
+        if(desc.isBlank()) {
+            entryDescription.onNext(Optional.empty())
+        } else {
+            entryDescription.onNext(Optional.of(desc))
+
+        }
     }
 
     fun setPictureUri(uri: Uri) {

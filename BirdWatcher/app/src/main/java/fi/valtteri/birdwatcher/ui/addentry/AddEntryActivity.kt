@@ -49,7 +49,7 @@ class AddEntryActivity : AppCompatActivity() {
 
     lateinit var viewModel: AddEntryViewModel
 
-    lateinit var speciesAdapter: ArrayAdapter<String>
+    lateinit var speciesAdapter: SpeciesSelectionAdapter
     lateinit var speciesInput: SpeciesSelectionEditText
 
     lateinit var descriptionInput: EditText
@@ -129,27 +129,27 @@ class AddEntryActivity : AppCompatActivity() {
 
         }
 
-        viewModel.getSpeciesNames().observe(this, Observer {names ->
-            speciesAdapter.clear()
-            speciesAdapter.addAll(names)
+        viewModel.getSpecies().observe(this, Observer {birds ->
+            speciesAdapter.setItems(birds)
         })
 
         viewModel.getEntryTimestamp().observe(this, Observer { timestamp ->
             timestamp_input.setText(timestamp.toString(DateTimeFormat.mediumDateTime()), TextView.BufferType.NORMAL)
         })
 
-        viewModel.getEntrySpeciesName().observe(this, Observer { name ->
-            Timber.d("TEXT = $name")
-            speciesInput.setText(name, TextView.BufferType.NORMAL)
-            if(name.isBlank()) {
+        viewModel.getEntrySpecies().observe(this, Observer { birdObservable ->
+            if(!birdObservable.isPresent) {
                 species_input_container.error = "Add species"
             } else {
                 species_input_container.error = null
+                val bird = birdObservable.get()
+                speciesInput.setText(bird.displayName, TextView.BufferType.NORMAL)
             }
+
         })
 
-        viewModel.getEntryDescription().observe(this, Observer { description ->
-            if (description.isBlank()) {
+        viewModel.getEntryDescription().observe(this, Observer { descriptionObservable ->
+            if (!descriptionObservable.isPresent) {
                 descriptionInputLayout.error = "Add description"
             } else {
                 descriptionInputLayout.error = null
@@ -260,7 +260,7 @@ class AddEntryActivity : AppCompatActivity() {
         //species selection dialog
 
         // setup species adapter
-        speciesAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, mutableListOf())
+        speciesAdapter = SpeciesSelectionAdapter(this, android.R.layout.simple_selectable_list_item, mutableListOf())
 
         val builder = AlertDialog.Builder(this@AddEntryActivity)
 
@@ -274,7 +274,7 @@ class AddEntryActivity : AppCompatActivity() {
             override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 speciesSelectionDialog.dismiss()
                 speciesAdapter.getItem(position)?.let {
-                    viewModel.setSpeciesName(it)
+                    viewModel.setEntrySpecies(it)
 
                 }
             }

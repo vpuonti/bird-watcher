@@ -1,6 +1,7 @@
 package fi.valtteri.birdwatcher.data.entities
 
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonQualifier
@@ -19,4 +20,7 @@ data class Species (
     val swedishName: String,
     @Json(name = "speciesEN")
     val englishName: String
-)
+) {
+    @Ignore
+    var displayName: String? = null
+}

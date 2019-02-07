@@ -11,9 +11,9 @@ import fi.valtteri.birdwatcher.data.entities.Observation
 import kotlinx.android.synthetic.main.observation_viewholder.view.*
 import org.joda.time.format.DateTimeFormat
 
-class ObservationsAdapter : RecyclerView.Adapter<ObservationsAdapter.ObservationViewHolder>() {
+class ObservationCardDataAdapter : RecyclerView.Adapter<ObservationCardDataAdapter.ObservationViewHolder>() {
 
-    private val items: MutableList<Observation> = mutableListOf()
+    private val items: MutableList<ObservationCardData> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ObservationViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.observation_viewholder, parent, false)
@@ -24,19 +24,19 @@ class ObservationsAdapter : RecyclerView.Adapter<ObservationsAdapter.Observation
 
     override fun onBindViewHolder(holder: ObservationViewHolder, position: Int) = holder.bind(items[position])
 
-    fun setItems(observations: List<Observation>) {
-        items.clear()
-        items.addAll(observations)
+    fun setItems(items: List<ObservationCardData>) {
+        this.items.clear()
+        this.items.addAll(items)
         notifyDataSetChanged()
     }
 
     class ObservationViewHolder(view: View, private val context: Context) : RecyclerView.ViewHolder(view) {
-        fun bind(observation: Observation) {
+        fun bind(observation: ObservationCardData) {
             itemView.card_timestamp.text = observation.timeStamp.toString(DateTimeFormat.mediumDateTime())
-            observation.picUri?.let {
+            observation.pictureUri?.let {
                 Glide.with(context).load(it).into(itemView.card_image)
             }
-            itemView.card_title.text = observation.description
+            itemView.card_title.text = observation.notes
         }
     }
 }
