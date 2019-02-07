@@ -1,6 +1,15 @@
 # bird-watcher
 An app for my local bird watching association.
 
+## Video
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=ZKGj5zeGPAU
+" target="_blank"><img src="http://img.youtube.com/vi/ZKGj5zeGPAU/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
+
+
+## General info
+
 Bird data from Finnish bird atlas: http://atlas3.lintuatlas.fi/taustaa/kaytto
 
 |||
