@@ -19,7 +19,7 @@ class BirdWatcherApp : Application(), HasActivityInjector {
 
     override fun onCreate() {
         super.onCreate()
-        Timber.plant(Timber.DebugTree())
+        //Timber.plant(Timber.DebugTree())
         DaggerAppComponent
             .builder()
             .application(this)

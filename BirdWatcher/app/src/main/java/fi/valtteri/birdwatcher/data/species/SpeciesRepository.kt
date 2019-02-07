@@ -33,9 +33,7 @@ class SpeciesRepository @Inject constructor(
         .flatMap { it -> Single.just(it.isEmpty()) }
 
     private val dataFresh: Single<Boolean> = Singles.zip(Single.just(isFresh()), speciesIsEmpty) { fresh, empty ->
-        val freshWhen = (!empty.or(!fresh))
-        Timber.d("Freshness: $freshWhen")
-        return@zip freshWhen
+        return@zip (!empty.or(!fresh))
     }
 
 

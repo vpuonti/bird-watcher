@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.AndroidSupportInjection
 import fi.valtteri.birdwatcher.MainActivity
 import fi.valtteri.birdwatcher.R
@@ -30,6 +31,8 @@ class ObservationsFragment : Fragment() {
     private lateinit var recyclerview: RecyclerView
     private lateinit var layoutManager: LinearLayoutManager
 
+    private lateinit var noObservationsSnackbar: Snackbar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidSupportInjection.inject(this)
         super.onCreate(savedInstanceState)
@@ -40,6 +43,7 @@ class ObservationsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.observations_fragment, container, false)
+        noObservationsSnackbar = Snackbar.make(view, "No observations to show.", Snackbar.LENGTH_INDEFINITE)
         adapter = ObservationCardDataAdapter()
         recyclerview = view.observation_recycler
         layoutManager = LinearLayoutManager(context)
@@ -56,6 +60,11 @@ class ObservationsFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ObservationsViewModel::class.java)
         viewModel.getObservationCardData().observe(this, Observer { observations ->
+            if(observations.isEmpty()){
+                noObservationsSnackbar.show()
+            } else {
+                noObservationsSnackbar.dismiss()
+            }
             adapter.setItems(observations)
         })
     }

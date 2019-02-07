@@ -3,7 +3,6 @@ package fi.valtteri.birdwatcher.ui.addentry
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.widget.Toast
 import com.google.android.material.textfield.TextInputEditText
 import timber.log.Timber
 
@@ -28,11 +27,9 @@ class SpeciesSelectionEditText : TextInputEditText {
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when(event.action) {
             MotionEvent.ACTION_DOWN -> {
-                Timber.d("DOWN")
                 return true
             }
             MotionEvent.ACTION_UP -> {
-                Timber.d("UP")
                 openSpeciesSelection?.open()
                 return true
             }
