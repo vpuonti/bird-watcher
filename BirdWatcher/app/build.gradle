@@ -11,7 +11,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "fi.valtteri.birdwatcher"
-        minSdkVersion 14
+        minSdkVersion 24
         targetSdkVersion 28
         multiDexEnabled true
         versionCode 1
