@@ -15,7 +15,7 @@ Bird data from Finnish bird atlas: http://atlas3.lintuatlas.fi/taustaa/kaytto
 |||
 |---|---|
 |Built on SDK| 28|
-|Min SDK | 14 |
+|Min SDK | 24 |
 
 ## Technologies/concepts used
 
